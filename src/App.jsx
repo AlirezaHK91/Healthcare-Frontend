@@ -1,36 +1,27 @@
 import * as React from "react";
-import CssBaseline from "@mui/material/CssBaseline";
-import Container from "@mui/material/Container";
-import Header from "./Header";
-import Footer from "./Footer";
-import { createTheme } from "@mui/material/styles";
-
-const theme = createTheme();
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
+import Layout from "./pages/Layout";
+import PrivateRoutes from "./utils/PrivateRoutes";
 
 export default function App() {
   return (
-    <>
-      <CssBaseline />
-      <Header />
-
-      <Container
-        maxWidth="100%"
-        sx={{
-          mx: 'auto',
-          width: '100%',
-          [theme.breakpoints.up("xs")]: {
-            px: 0,
-          },
-        }}
-      >
-        <main>
-
-        </main>
-      </Container>
-      <Footer
-        title="Footer"
-        description="Something here to give the footer a purpose!"
-      />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/loginpage" element={<LoginPage />} />
+        <Route
+          path="/"
+          element={
+            <Layout>
+              <PrivateRoutes />
+            </Layout>
+          }>
+          <Route path="/" element={<HomePage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }

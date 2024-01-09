@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useContext } from "react";
-import { AuthContext } from "./context/AuthContext";
+import { AuthContext } from "./context/Authcontext";
 import { useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -15,7 +15,6 @@ import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import { CssBaseline } from "@mui/material";
 
 const pages = [
@@ -28,6 +27,7 @@ function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
+  const [roles, setRoles] = useState("");
 
   const settings = ["Dashboard", "Logout"];
   
@@ -35,6 +35,15 @@ function NavBar() {
     state: { user },
     logout,
   } = useContext(AuthContext);
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      setRoles(storedUser.roles);
+      console.log(storedUser.roles);
+    }
+  }, [user]);
+
   const isLoggedIn = user !== null;
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -60,13 +69,15 @@ function NavBar() {
       logout();
       setTimeout(() => {
         navigate("loginpage");
-      }, 1000);
+      }, 200);
 
-      setIsLoggedIn(false);
-    } else if (setting === "Login") {
-      setIsLoggedIn(true);
     } else if (setting === "Dashboard") {
-      navigate("dashboard");
+      if(roles.includes("ROLE_USER")){
+        navigate("dashboard-patient")
+      } else if (roles.includes("ROLE_ADMIN")) {
+        navigate("dashboard-admin")
+      }
+     
     }
     handleCloseUserMenu();
   };

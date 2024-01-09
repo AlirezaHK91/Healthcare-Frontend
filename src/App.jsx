@@ -5,7 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import Layout from "./pages/Layout";
 import PrivateRoutes from "./utils/PrivateRoutes";
-import { AuthProvider } from "./context/Authcontext";
+import { AuthProvider } from "./context/AuthContext";
 import Footer from "./Footer";
 import Header from "./Header";
 
@@ -13,6 +13,8 @@ export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+      <div className="flex flex-col min-h-screen">
+            <div className="flex-grow bg-[#EFECEC]">
       <Header/>
         <Routes>
         <Route path="/" element={<HomePage />} />
@@ -20,7 +22,9 @@ export default function App() {
           <Route path="/loginpage" element={<LoginPage />} />
 
         </Routes>
+        </div>
         <Footer/>
+        </div>
       </BrowserRouter>
     </AuthProvider>
   );

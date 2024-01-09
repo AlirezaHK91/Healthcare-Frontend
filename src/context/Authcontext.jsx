@@ -31,7 +31,7 @@ const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       const apiUrl = import.meta.env.VITE_API_URL;
-      const response = await axios.post(`${apiUrl}/api/auth/logout`);
+      const response = await axios.post(`${apiUrl}/api/auth/sign-out`);
 
       const cookies = response.headers["set-cookie"];
       if (cookies) {

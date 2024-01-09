@@ -8,22 +8,23 @@ import PrivateRoutes from "./utils/PrivateRoutes";
 import { AuthProvider } from "./context/AuthContext";
 import Footer from "./Footer";
 import Header from "./Header";
+import ReviewPage from "./pages/ReviewPage";
 
 export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-      <div className="flex flex-col min-h-screen">
-            <div className="flex-grow bg-[#EFECEC]">
-      <Header/>
-        <Routes>
-        <Route path="/" element={<HomePage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/loginpage" element={<LoginPage />} />
-
-        </Routes>
-        </div>
-        <Footer/>
+        <div className="flex flex-col min-h-screen">
+          <div className="flex-grow bg-[#EFECEC]">
+            <Header />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/loginpage" element={<LoginPage />} />
+              <Route path="/review" element={<ReviewPage />} />
+            </Routes>
+          </div>
+          <Footer />
         </div>
       </BrowserRouter>
     </AuthProvider>

@@ -5,7 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import Layout from "./pages/Layout";
 import PrivateRoutes from "./utils/PrivateRoutes";
-import { AuthProvider } from "./context/Authcontext";
+import { AuthProvider } from "./context/AuthContext";
 import Footer from "./Footer";
 import Header from "./Header";
 

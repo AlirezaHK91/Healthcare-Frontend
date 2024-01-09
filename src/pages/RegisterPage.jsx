@@ -15,7 +15,7 @@ function RegisterPage() {
     speciality: "",
     username: "",
     email: "",
-    roles: ["admin"],
+    roles: [""],
     password: "",
   });
 
@@ -72,9 +72,12 @@ function RegisterPage() {
             />
             <select
               name="speciality"
-              className="block  border-2 border-[#575757 w-full p-1 rounded-lg mb-4]"
+              className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4 appearance-none focus:outline-none focus:border-blue"
               value={speciality}
               onChange={(e) => onInputChange(e)}>
+              <option value="" disabled>
+                Select Speciality
+              </option>
               <option value="GENERAL_PRACTITIONER">General Practitioner</option>
               <option value="DISTRICT_NURSE">District Nurse</option>
               <option value="PHYSIOTHERAPIST">Physiotherpaist</option>

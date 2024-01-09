@@ -15,7 +15,7 @@ function RegisterPage() {
     speciality: "",
     username: "",
     email: "",
-    roles: [""],
+    roles: ["user"], // Set a default role, you can adjust as needed
     password: "",
   });
 
@@ -25,9 +25,8 @@ function RegisterPage() {
     const { name, value } = e.target;
 
     if (name === "roles") {
-      setRegister({ ...register, roles, roles: [value] });
-    }
-    if (name === "speciality") {
+      setRegister({ ...register, roles: [value] });
+    } else if (name === "speciality") {
       setRegister({ ...register, speciality: value });
     } else {
       setRegister({ ...register, [name]: value });
@@ -44,7 +43,11 @@ function RegisterPage() {
     }
     try {
       console.log(register);
-      await axios.post(`${apiUrl}/api/auth/signup`, register);
+      await axios.post(`${apiUrl}/api/auth/signup`, register, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       setSuccessMessage("Registration successful!");
       setTimeout(() => {
         navigate("/loginpage");

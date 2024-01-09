@@ -70,3 +70,10 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
+input[type="radio"] {
+  display: none;
+}
+
+.star {
+  cursor: pointer;
+}

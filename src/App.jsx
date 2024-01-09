@@ -9,7 +9,7 @@ import { AuthProvider } from "./context/Authcontext";
 import Footer from "./Footer";
 import Header from "./Header";
 import PatienDashboard from "./pages/PatientDashboard";
-import AdminDashboard from "./pages/AdminDashboard";
+import ReviewPage from "./pages/ReviewPage";
 
 export default function App() {
   return (
@@ -23,6 +23,7 @@ export default function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/loginpage" element={<LoginPage />} />
           <Route path="/dashboard-patient" element={<PatienDashboard />} />
+          <Route path="/review" element={<ReviewPage />} />
 
         </Routes>
         </div>

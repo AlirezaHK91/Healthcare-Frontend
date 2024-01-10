@@ -9,7 +9,7 @@ function Copyright() {
     <Typography variant="body2" color="text.secondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Healthcare AB
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -20,20 +20,11 @@ function Copyright() {
 export default function Footer({title, description}) {
 
   return (
-    <Box component="footer" sx={{ bgcolor: 'background.paper', py: 6 , position: "sticky"}}>
+    <Box component="footer" sx={{ bgcolor: '#A3B8CB', py: 6 , position: "sticky"}}>
       <Container maxWidth="lg">
-        <Typography variant="h6" align="center" gutterBottom>
-          {title}
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="text.secondary"
-          component="p"
-        >
-          {description}
-        </Typography>
+        
         <Copyright />
+
       </Container>
     </Box>
   );

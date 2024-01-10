@@ -37,17 +37,33 @@ function RegisterPage() {
     e.preventDefault();
     setError("");
     setSuccessMessage("");
-    if (!fullName || !speciality || !username || !email || !password) {
+    if (!fullName || !username || !email || !password) {
       setError("Please fill in all required fields.");
       return;
     }
+
     try {
-      console.log(register);
-      await axios.post(`${apiUrl}/api/auth/signup`, register, {
+      let postData = {
+        fullName,
+        username,
+        email,
+        roles,
+        password,
+      };
+
+      // Only include speciality if the role is "Staff"
+      if (roles[0] === "admin") {
+        postData.speciality = speciality;
+      }
+
+      console.log(postData);
+
+      await axios.post(`${apiUrl}/api/auth/signup`, postData, {
         headers: {
           "Content-Type": "application/json",
         },
       });
+
       setSuccessMessage("Registration successful!");
       setTimeout(() => {
         navigate("/loginpage");
@@ -61,10 +77,39 @@ function RegisterPage() {
   return (
     <form onSubmit={(e) => onSubmit(e)}>
       <div className="pt-28 h-full lg:pt-25 ">
-        <div className="container max-w-lg mx-auto flex-1 flex flex-col items-center justify-center lg_px-8">
-          <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full">
+        <div className="container max-w-lg flex-1 mx-auto flex flex-col items-center justify-center lg:px-4 ">
+          <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full  ">
             <h1 className="mb-8 text-3xl text-center">Sign up</h1>
 
+            <select
+              name="roles"
+              className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4  focus:outline-none focus:border-blue"
+              value={roles}
+              onChange={(e) => onInputChange(e)}>
+              <option value="user">Patient</option>
+              <option value="admin">Staff</option>
+            </select>
+            {roles[0] === "admin" && (
+              <select
+                name="speciality"
+                className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4 appearance-none focus:outline-none focus:border-blue"
+                value={speciality}
+                onChange={(e) => onInputChange(e)}>
+                <option value="" disabled>
+                  Select Speciality
+                </option>
+                <option value="GENERAL_PRACTITIONER">
+                  General Practitioner
+                </option>
+                <option value="DISTRICT_NURSE">District Nurse</option>
+                <option value="PHYSIOTHERAPIST">Physiotherpaist</option>
+                <option value="CURATOR">Curator</option>
+                <option value="FOOT_THERAPIST">Foot Therapist</option>
+                <option value="MIDWIFE">Midwife</option>
+                <option value="PSYCHOLOGIST">Psychologist</option>
+                <option value="BVC_NURSE">Bvc Nurse</option>
+              </select>
+            )}
             <input
               type="text"
               name="fullName"
@@ -73,23 +118,6 @@ function RegisterPage() {
               value={fullName}
               onChange={(e) => onInputChange(e)}
             />
-            <select
-              name="speciality"
-              className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4 appearance-none focus:outline-none focus:border-blue"
-              value={speciality}
-              onChange={(e) => onInputChange(e)}>
-              <option value="" disabled>
-                Select Speciality
-              </option>
-              <option value="GENERAL_PRACTITIONER">General Practitioner</option>
-              <option value="DISTRICT_NURSE">District Nurse</option>
-              <option value="PHYSIOTHERAPIST">Physiotherpaist</option>
-              <option value="CURATOR">Curator</option>
-              <option value="FOOT_THERAPIST">Foot Therapist</option>
-              <option value="MIDWIFE">Midwife</option>
-              <option value="PSYCHOLOGIST">Psychologist</option>
-              <option value="BVC_NURSE">Bvc Nurse</option>
-            </select>
 
             <input
               type="text"
@@ -117,14 +145,6 @@ function RegisterPage() {
               onChange={(e) => onInputChange(e)}
             />
 
-            <select
-              name="roles"
-              className="block  border-2 border-[#575757 w-full p-1 rounded-lg mb-4]"
-              value={roles}
-              onChange={(e) => onInputChange(e)}>
-              <option value="user">Patient</option>
-              <option value="admin">Staff</option>
-            </select>
             <div className="text-[#434343] inset-x-16">
               Already have an account?
               <a

@@ -9,8 +9,10 @@ function PatienDashboard() {
   const [user, setUser] = useState("");
   const [error, setError] = useState("");
   const [roles, setRoles] = useState("");
+  const [bookings, setBookings] = useState([]);
   const [isUserDetailsFormExpanded, setIsUserDetailsFormExpanded] = useState(true);
   const [isPasswordFormExpanded, setIsPasswordFormExpanded] = useState(false);
+  const [isBookingFormExpanded, setIsBookingFormExpanded] = useState(false);
 
   const buttonStyle = {
     width: "100%",
@@ -37,9 +39,15 @@ function PatienDashboard() {
     if (formType === "userDetails") {
       setIsUserDetailsFormExpanded((prev) => !prev);
       setIsPasswordFormExpanded(false);
+      setIsBookingFormExpanded(false);
     } else if (formType === "password") {
       setIsPasswordFormExpanded((prev) => !prev);
       setIsUserDetailsFormExpanded(false);
+      setIsBookingFormExpanded(false);
+    }else if (formType === "bookingDetails") {
+        setIsBookingFormExpanded((prev) => !prev);
+        setIsUserDetailsFormExpanded(false);
+        setIsPasswordFormExpanded(false);
     }
   };
 
@@ -91,6 +99,26 @@ function PatienDashboard() {
     }
   };
 
+  useEffect(() => {
+    const getBookings = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/api/auth/booking/getAll/${user}`, {
+          withCredentials: true,
+        });
+        const bookingData = response.data;
+        setBookings(bookingData);
+        console.log("Bookings:", bookingData);
+      } catch (error) {
+        console.error("Error fetching bookings:", error.message);
+        setError("Failed to fetch booking details.");
+      }
+    };
+
+    if (user && isBookingFormExpanded) {
+      getBookings();
+    }
+  }, [user, isBookingFormExpanded]);
+
   const onSubmit = async (e, formType) => {
     e.preventDefault();
     setError("");
@@ -112,16 +140,30 @@ function PatienDashboard() {
       }
     };
 
+    const cancelBooking = async (bookingId) => {
+        try {
+          const response = await axios.delete(`${apiUrl}/api/auth/booking/delete/${bookingId}`, {
+            withCredentials: true,
+          });
+    
+          console.log(response.data);
+    
+          setBookings((prevBookings) => prevBookings.filter((booking) => booking.id !== bookingId));
+        } catch (error) {
+          console.error("Error canceling booking:", error.message);
+          setError("Failed to cancel booking.");
+        }
+      };
+
   return (
     <>
     {/* update user */}
       <div
-        className="form-toggle"
+        className="form-toggle mb-4 mt-20 w-96 mx-auto flex-1 flex flex-col items-center justify-center lg:px-8"
         onClick={() => toggleFormExpansion("userDetails")}
         style={{
           cursor: "pointer",
           padding: "12px",
-          margin: "20px 30px 10px 30px",
           border: "1px solid #ccc",
           borderRadius: "20px",
           marginBottom: "10px",
@@ -130,16 +172,16 @@ function PatienDashboard() {
           textAlign: "center",
         }}
       >
-        Update user details
+        Update user information
       </div>
       <form
         style={{ display: isUserDetailsFormExpanded ? "block" : "none", }}
         onSubmit={(e) => onSubmit(e, "userDetails")}
       >
-        <div className="container max-w-lg mx-auto flex-1 flex flex-col items-center justify-center lg:px-8">
+        <div className="container mb-7 max-w-lg mx-auto flex-1 flex flex-col items-center justify-center lg:px-8">
           <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full">
-            <h1 className="mb-5 text-xl text-center">User details</h1>
-
+            <h1 className="mb-5 text-xl text-center">User information</h1>
+            <h6>Fullname</h6>
             <input
               type="text"
               className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
@@ -148,7 +190,7 @@ function PatienDashboard() {
               value={updateUser.firstName}
               onChange={(e) => onInputChange(e, "userDetails")}
             />
-
+            <h6>Username</h6>
             <input
               type="text"
               className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
@@ -157,7 +199,7 @@ function PatienDashboard() {
               value={updateUser.username}
               onChange={(e) => onInputChange(e, "userDetails")}
             />
-
+            <h6>Email</h6>
             <input
               type="text"
               className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
@@ -185,12 +227,11 @@ function PatienDashboard() {
 
     {/* change password */}
       <div
-        className="form-toggle"
+        className="form-toggle mb-4 w-96 mx-auto flex-1 flex flex-col items-center justify-center lg:px-8"
         onClick={() => toggleFormExpansion("password")}
         style={{
           cursor: "pointer",
           padding: "12px",
-          margin: "20px 30px 10px 30px",
           border: "1px solid #ccc",
           borderRadius: "20px",
           marginBottom: "10px",
@@ -205,7 +246,7 @@ function PatienDashboard() {
         style={{  display: isPasswordFormExpanded ? "block" : "none", }}
         onSubmit={(e) => onSubmit(e, "password")}
       >
-        <div className="container max-w-lg mx-auto flex-1 flex flex-col items-center justify-center lg:px-8">
+        <div className="container mb-7 max-w-lg mx-auto flex-1 flex flex-col items-center justify-center lg:px-8">
           <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full">
             <h1 className="mb-5 text-xl text-center">Password</h1>
 
@@ -233,6 +274,50 @@ function PatienDashboard() {
           </div>
         </div>
       </form>
+
+      {/* List Booking Details */}
+      <div
+        className="form-toggle mb-4 w-96 mx-auto flex-1 flex flex-col items-center justify-center lg:px-8 "
+        onClick={() => toggleFormExpansion("bookingDetails")}
+        style={{
+          cursor: "pointer",
+          padding: "12px",  
+          border: "1px solid #ccc",
+          borderRadius: "20px",
+          marginBottom: "10px",
+          backgroundColor: isBookingFormExpanded ? "#A3B8CB" : "#506081",
+          color: isBookingFormExpanded ? "#000" : "white",
+          textAlign: "center",
+        }}
+      >
+        View Booking Details
+      </div>
+      {isBookingFormExpanded && (
+        <div className="container mb-32 max-w-lg mx-auto flex-1 flex flex-col items-center justify-center lg:px-8">
+        <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full">
+          <h1 className="mb-5 text-xl text-center">Upcoming appointments</h1>
+        <div className="booking-list text-sm">
+          <ul>
+            {bookings.map((booking) => (
+              <li className="mb-7 border-4 border-gray-400 rounded p-4 " key={booking.id} >
+                <strong>Date:</strong> {booking.schedule.date}<br />
+                <strong>Time:</strong> {booking.schedule.time}<br />
+                <strong>Specialist:</strong> {booking.speciality}<br />
+
+                <button
+              className="mt-2 p-1 bg-red-500 text-white rounded hover:bg-red-700"
+              onClick={() => cancelBooking(booking.id)}
+            >
+              Cancel Booking
+            </button>
+              </li>
+              
+            ))}
+          </ul>
+        </div>
+        </div>
+        </div>
+      )}
     </>
   );
 }

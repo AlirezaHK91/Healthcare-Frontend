@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage";
 import Layout from "./pages/Layout";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import { AuthProvider } from "./context/Authcontext";
+import BookingPage from "./pages/BookingPage";
 
 export default function App() {
   return (
@@ -14,13 +15,15 @@ export default function App() {
         <Routes>
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/loginpage" element={<LoginPage />} />
+          <Route path="/booking" element={<BookingPage />} />
           <Route
             path="/"
             element={
               <Layout>
                 <PrivateRoutes />
               </Layout>
-            }>
+            }
+          >
             <Route path="/" element={<HomePage />} />
           </Route>
         </Routes>

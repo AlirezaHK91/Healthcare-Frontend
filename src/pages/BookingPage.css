@@ -1,0 +1,9 @@
+body {
+   background-color: bisque; 
+}
+
+.input-fields {
+   display: flex;
+   flex-direction: column;
+   color: blue;
+}

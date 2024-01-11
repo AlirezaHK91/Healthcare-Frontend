@@ -48,7 +48,7 @@ function LoginPage() {
       setSuccessMessage("Login successful!");
       setTimeout(() => {
         navigate("/");
-      }, 3000);
+      }, 500);
     } catch (error) {
       console.log("Error from react:", error.message);
       setError("Invalid credentials. Please try again.");

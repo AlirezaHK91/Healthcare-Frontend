@@ -68,8 +68,8 @@ function NavBar() {
     if (setting === "Logout") {
       logout();
       setTimeout(() => {
-        navigate("loginpage");
-      }, 200);
+        navigate("/");
+      }, 500);
 
     } else if (setting === "Dashboard") {
       if(roles.includes("ROLE_USER")){

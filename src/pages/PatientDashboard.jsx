@@ -106,14 +106,17 @@ function PatienDashboard() {
           withCredentials: true,
         });
         const bookingData = response.data;
-        setBookings(bookingData);
-        console.log("Bookings:", bookingData);
+        
+        const filteredBookings = bookingData.filter((booking) => !booking.isDone);
+  
+        setBookings(filteredBookings);
+        console.log("Bookings:", filteredBookings);
       } catch (error) {
         console.error("Error fetching bookings:", error.message);
         setError("Failed to fetch booking details.");
       }
     };
-
+  
     if (user && isBookingFormExpanded) {
       getBookings();
     }

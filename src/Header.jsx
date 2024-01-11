@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
-import { AuthContext } from "./context/Authcontext";
+import { AuthContext } from "./context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";

@@ -45,13 +45,13 @@ const HomePage = () => {
             style={{ textDecoration: "none", marginTop: "10px", display: "block" }}
           >
             <button
-              className="button1 bg-[#777777]"
+              className="button1 bg-[#82a9ab]"
               style={{
-                fontSize: "18px",
+                fontSize: "16px",
                 borderRadius: "8px",
-                padding: "10px 20px",
+                padding: "13px 25px 13px 25px",
                 cursor: "pointer",
-                marginTop: "30px",
+                marginTop: "50%",
               }}
             >
               Book appointment

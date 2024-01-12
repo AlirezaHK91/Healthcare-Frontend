@@ -157,7 +157,7 @@ function RegisterPage() {
 
             <button
               type="submit"
-              className="w-full text-center py-3 border-2 border-[#575757] rounded-lg bg-[#575757] text-black hover:bg-green-dark focus:outline-none my-1">
+              className="w-full text-center py-3 border-2 border-[#575757] rounded-lg bg-[#82a9ab] text-black hover:bg-green-dark focus:outline-none my-1">
               Sign up
             </button>
             {error && <p className="text-red-500 text-lg">{error}</p>}

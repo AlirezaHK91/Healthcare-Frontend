@@ -75,7 +75,7 @@ export default function ReviewPage() {
   return (
     <div className="flex flex-col">
       <div className="mx-auto mt-5 mb-3">
-        <img src={feedback} className="w-40 mt-20" alt="Success Icon" />
+        <img src={feedback} className="w-80 mt-20" alt="Success Icon" />
       </div>
 
       {/* Select booking */}
@@ -121,7 +121,7 @@ export default function ReviewPage() {
                 className="star"
                 size={30}
                 color={
-                  currentRating <= (hover || rating) ? "#ffc107" : "#d4e5e9"
+                  currentRating <= (hover || rating) ? "#ffc107" : "#98C2DA"
                 }
                 onMouseEnter={() => setHover(currentRating)}
                 onMouseLeave={() => setHover(null)}
@@ -146,10 +146,10 @@ export default function ReviewPage() {
         <button
           type="button"
           onClick={handleSubmit}
-          className="w-full text-center py-2 px-2 border-2 border-[#575757] rounded-lg bg-[#575757] text-black hover:bg-green-dark focus:outline-none my-1">
+          className="w-full text-center py-3 px-16 border-2 rounded-lg bg-[#82a9ab] text-black hover:bg-green-dark focus:outline-none my-1">
           Submit review
         </button>
-        {errorMessage && <p className="text-red-500 text-lg">{errorMessage}</p>}
+        {errorMessage && <p className="text-red-500 text-md">{errorMessage}</p>}
         {successMessage && (
           <p className="text-green-700 text-md">{successMessage}</p>
         )}

@@ -1,6 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import edit from "../assets/edit.png"
+import pass from "../assets/pass.png"
+import view from "../assets/view.png"
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -161,22 +164,27 @@ function PatienDashboard() {
   return (
     <>
     {/* update user */}
-      <div
-        className="form-toggle mb-4 mt-20 w-96 mx-auto flex-1 flex flex-col items-center justify-center lg:px-8"
-        onClick={() => toggleFormExpansion("userDetails")}
-        style={{
-          cursor: "pointer",
-          padding: "12px",
-          border: "1px solid #ccc",
-          borderRadius: "20px",
-          marginBottom: "10px",
-          backgroundColor: isUserDetailsFormExpanded ? "#A3B8CB" : "#506081",
-          color: isUserDetailsFormExpanded ? "#000" : "white",
-          textAlign: "center",
-        }}
-      >
-        Update user information
-      </div>
+    <div
+  className="form-toggle mb-4 mt-12 w-96 mx-auto flex items-center justify-center lg:px-8"
+  onClick={() => toggleFormExpansion("userDetails")}
+  style={{
+    cursor: "pointer",
+    padding: "12px",
+    border: "1px solid #ccc",
+    borderRadius: "20px",
+    marginBottom: "10px",
+    backgroundColor: isUserDetailsFormExpanded ? "#A3B8CB" : "#506081",
+    color: isUserDetailsFormExpanded ? "#000" : "white",
+    textAlign: "center",
+    display: "flex",
+    alignItems: "center",
+  }}
+>
+  <span style={{ flex: "", marginLeft:"10px" }}>
+    Update user information
+  </span>
+  <img className="w-8" src={edit} alt="" />
+</div>
       <form
         style={{ display: isUserDetailsFormExpanded ? "block" : "none", }}
         onSubmit={(e) => onSubmit(e, "userDetails")}
@@ -214,7 +222,7 @@ function PatienDashboard() {
 
             <button
               type="submit"
-              className="w-full text-center py-3 rounded-lg bg-[#777777] text-black hover:bg-green-dark focus:outline-none my-1"
+              className="w-full text-center py-3 rounded-lg bg-[#82a9ab] text-black hover:bg-green-dark focus:outline-none my-1"
               style={buttonStyle}
             >
               Update
@@ -229,22 +237,27 @@ function PatienDashboard() {
       </form>
 
     {/* change password */}
-      <div
-        className="form-toggle mb-4 w-96 mx-auto flex-1 flex flex-col items-center justify-center lg:px-8"
-        onClick={() => toggleFormExpansion("password")}
-        style={{
-          cursor: "pointer",
-          padding: "12px",
-          border: "1px solid #ccc",
-          borderRadius: "20px",
-          marginBottom: "10px",
-          backgroundColor: isPasswordFormExpanded ? "#A3B8CB" : "#506081",
-          color: isPasswordFormExpanded ? "#000" : "white",
-          textAlign: "center",
-        }}
-      >
-        Update Password
-      </div>
+    <div
+  className="form-toggle mb-4 w-96 mx-auto flex items-center justify-center lg:px-8"
+  onClick={() => toggleFormExpansion("password")}
+  style={{
+    cursor: "pointer",
+    padding: "12px",
+    border: "1px solid #ccc",
+    borderRadius: "20px",
+    marginBottom: "10px",
+    backgroundColor: isPasswordFormExpanded ? "#A3B8CB" : "#506081",
+    color: isPasswordFormExpanded ? "#000" : "white",
+    textAlign: "center",
+    display: "flex",
+    alignItems: "center",
+  }}
+>
+  <span style={{ flex: "" }}>
+    Update Password
+  </span>
+  <img className="w-8 ml-2" src={pass} alt="" />
+</div>
       <form
         style={{  display: isPasswordFormExpanded ? "block" : "none", }}
         onSubmit={(e) => onSubmit(e, "password")}
@@ -264,7 +277,7 @@ function PatienDashboard() {
 
             <button
               type="submit"
-              className="w-full text-center py-3 rounded-lg bg-[#777777] text-black hover:bg-green-dark focus:outline-none my-1"
+              className="w-full text-center py-3 rounded-lg bg-[#82a9ab] text-black hover:bg-green-dark focus:outline-none my-1"
               style={buttonStyle}
             >
               Update
@@ -280,21 +293,26 @@ function PatienDashboard() {
 
       {/* List Booking Details */}
       <div
-        className="form-toggle mb-4 w-96 mx-auto flex-1 flex flex-col items-center justify-center lg:px-8 "
-        onClick={() => toggleFormExpansion("bookingDetails")}
-        style={{
-          cursor: "pointer",
-          padding: "12px",  
-          border: "1px solid #ccc",
-          borderRadius: "20px",
-          marginBottom: "10px",
-          backgroundColor: isBookingFormExpanded ? "#A3B8CB" : "#506081",
-          color: isBookingFormExpanded ? "#000" : "white",
-          textAlign: "center",
-        }}
-      >
-        View Booking Details
-      </div>
+  className="form-toggle mb-4 w-96 mx-auto flex items-center justify-center lg:px-8"
+  onClick={() => toggleFormExpansion("bookingDetails")}
+  style={{
+    cursor: "pointer",
+    padding: "12px",
+    border: "1px solid #ccc",
+    borderRadius: "20px",
+    marginBottom: "10px",
+    backgroundColor: isBookingFormExpanded ? "#A3B8CB" : "#506081",
+    color: isBookingFormExpanded ? "#000" : "white",
+    textAlign: "center",
+    display: "flex",
+    alignItems: "center",
+  }}
+>
+  <span style={{ flex: "" }}>
+    View Booking Details
+  </span>
+  <img className="w-8 ml-2" src={view} alt="" />
+</div>
       {isBookingFormExpanded && (
         <div className="container mb-32 max-w-lg mx-auto flex-1 flex flex-col items-center justify-center lg:px-8">
         <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full">

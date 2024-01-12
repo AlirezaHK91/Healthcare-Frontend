@@ -16,6 +16,7 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { CssBaseline } from "@mui/material";
+import DR from "./assets/dr.png"
 
 const pages = [
   { name: "Home", page: "/" },
@@ -155,16 +156,19 @@ function NavBar() {
               component="a"
               href="/"
               sx={{
-                mr: 8,
+                mr: 7,
                 display: { xs: "flex", md: "none" },
                 fontFamily: "monospace",
                 fontWeight: 700,
                 letterSpacing: ".3rem",
                 color: "#A3B8CB",
                 textDecoration: "none",
+                fontSize:"20px",
+                
               }}
             >
-              Healthcare AB
+              Healthcare AB 
+              <img className="dr w-8" src={DR} alt="" />
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (

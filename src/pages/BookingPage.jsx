@@ -3,6 +3,8 @@ import "./Bookingpage.css";
 import axios from "axios";
 import { TextField } from "@mui/material";
 import { style } from "@mui/system";
+import spec from "../assets/spec.png"
+import prac from "../assets/perac.png"
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -104,7 +106,27 @@ function BookingPage() {
   };
 
   return (
-    <div className="container">
+    <>
+    <div
+      className="form-toggle mb-4 mt-10 w-96 mx-auto flex items-center justify-center lg:px-8"
+      style={{
+       cursor: "pointer",
+      padding: "12px",
+      border: "1px solid #ccc",
+      borderRadius: "20px",
+      backgroundColor: "#A3B8CB",
+      color: "#000",
+      textAlign: "center",
+      display: "flex",
+      flexDirection: "row", // Set flex direction to row
+  }}
+>
+  <span style={{ fontSize: "17px"}}>
+    Booking appointments
+  </span>
+  <img className="w-6 ml-2" src={spec} alt="" />
+</div>
+    <div className="container -mt-14">
       <div className="flex-container flex-co flex flex-1">
         <div
           style={{
@@ -115,7 +137,6 @@ function BookingPage() {
             alignItems: "center"
           }}
         >
-          <h6 style={{fontSize:"20px", fontFamily:"sa"}}>Booking</h6>
           <form className="form">
             <select
               name="speciality"
@@ -123,7 +144,7 @@ function BookingPage() {
               value={speciality}
               onChange={handleInput}
             >
-              <option value="" disabled>
+              <option>
                 Select Speciality
               </option>
               <option value="GENERAL_PRACTITIONER">General Practitioner</option>
@@ -157,8 +178,9 @@ function BookingPage() {
                 Available times
               </p>
               {filterBySpeciality(speciality, schedules).map((schedule) => (
+                
                 <li
-                className={`mb-3 border-4 border-gray-400 bg-gray-300 rounded p-4 ${clickedSchedule === schedule.id ? 'selected-booking' : ''} ${hoveredSchedule === schedule.id ? 'hovered-booking' : ''}`}
+                className={`mb-3 border-4 border-gray-400 bg-gray-300 rounded p-2 ${clickedSchedule === schedule.id ? 'selected-booking' : ''} ${hoveredSchedule === schedule.id ? 'hovered-booking' : ''}`}
                   key={schedule.id}
                   onClick={() => {
                     setScheduleId(clickedSchedule === schedule.id ? 0 : schedule.id);
@@ -172,13 +194,13 @@ function BookingPage() {
                   <br />
                   <strong>Time:</strong> {schedule.time}
                   <br />
-                  <strong>Specialist:</strong> {schedule.speciality}
+                  <strong>Specialist:</strong> {schedule.speciality} <img className="inline-block w-7 mb-5" src={prac} alt="" />
                   <br />
                 </li>
               ))}
             </ul>
             )}
-            <button className="book-btn" onClick={(e) => handleSubmit(e)}>
+            <button className="book-btn bg-[#82a9ab]" onClick={(e) => handleSubmit(e)}>
               Book
             </button>
             
@@ -190,6 +212,8 @@ function BookingPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
+
 export default BookingPage;

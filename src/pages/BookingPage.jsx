@@ -11,8 +11,8 @@ function BookingPage() {
   const [speciality, setSpeciality] = useState("");
   const [scheduleId, setScheduleId] = useState(0);
   const [user, setUser] = useState(0);
-  const [selectedSchedule, setSelectedSchedule] = useState(false);
-
+  const [clickedSchedule, setClickedSchedule] = useState(null);
+  const [hoveredSchedule, setHoveredSchedule] = useState(null);
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser) {
@@ -98,29 +98,21 @@ function BookingPage() {
 
   return (
     <div className="container">
-      <div className="flex-container">
+      <div className="flex-container flex-co flex flex-1">
         <div
           style={{
             display: "flex",
             flexDirection: "column",
             width: "85%",
             padding: "20px",
+            alignItems: "center"
           }}
         >
+          <h6 style={{fontSize:"20px", fontFamily:"sa"}}>Booking</h6>
           <form className="form">
-            <div className="input-fields">
-              <TextField
-                type="text"
-                name="description"
-                placeholder="Describe your problem"
-                rows={5}
-                onChange={handleInput}
-                className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4  focus:outline-none focus:border-blue"
-              />
-            </div>
             <select
               name="speciality"
-              className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4 mt-4 appearance-none focus:outline-none focus:border-blue"
+              className="block border-2 border-[#575757] mt-6 w-full p-1 rounded-lg mb-4 appearance-none focus:outline-none focus:border-blue"
               value={speciality}
               onChange={handleInput}
             >
@@ -136,17 +128,31 @@ function BookingPage() {
               <option value="PSYCHOLOGIST">Psychologist</option>
               <option value="BVC_NURSE">Bvc Nurse</option>
             </select>
+
+            <div className="mb-4 w-full mx-auto flex-1 flex flex-col items-center justify-center">
+          <textarea
+            placeholder="Describe your problem"
+            rows={5}
+            value={handleInput}
+            className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4 mt-4 appearance-none focus:outline-none focus:border-blue"
+          />
+          </div>
+
             <div style={{ textAlign: "center", fontWeight: "bold" }}>
-              Avaliable times
+              <h3>Avaliable times</h3>
             </div>
             <ul>
               {filterBySpeciality(speciality, schedules).map((schedule) => (
                 <li
-                  className="mb-7 border-4 border-gray-400 rounded p-4"
+                className={`mb-3 border-4 border-gray-400 bg-gray-300 rounded p-4 ${clickedSchedule === schedule.id ? 'selected-booking' : ''} ${hoveredSchedule === schedule.id ? 'hovered-booking' : ''}`}
                   key={schedule.id}
-                  onClick={() => setScheduleId(schedule.id)}
+                  onClick={() => {
+                    setScheduleId(clickedSchedule === schedule.id ? 0 : schedule.id);
+                    setClickedSchedule(clickedSchedule === schedule.id ? null : schedule.id);
+                  }}
                   name="scheduleId"
                   value={schedule.id}
+                  style={{ fontSize: "12px" }}
                 >
                   <strong>Date:</strong> {schedule.date}
                   <br />

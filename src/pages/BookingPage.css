@@ -11,12 +11,11 @@
    min-width: 370px;
    max-width: 700px;
    align-items: center;
-   background-color: rgb(190, 190, 190);
+   background-color: #BFC3CC;
    display: flex;
    flex-direction: column;
    border-radius: 15px;
-   
-   margin: 50px 10px 50px 10px;
+   margin: 50px 30px 50px 30px;
 }
 
 .form {
@@ -64,7 +63,7 @@
    margin-top: 20px;
    width: 60%;
    border-radius: 10px;
-   background-color: white;
+   background-color: rgb(110, 110, 110);
    height: 50px;
    align-self: center;
 }
@@ -79,5 +78,23 @@ li:hover {
 
 li:active {
    font-weight: bold;
+   font-size: 14px; 
 }
+
+li.hovered-booking {
+   font-weight: bold;
+   font-size: 14px; 
+   
+}
+
+li.selected-booking {
+   font-weight: bold;
+   border-color: rgb(98, 98, 98);
+   
+}
+
+.booking-list-item {
+   font-size: 14px;
+   transition: font-size 0.3s ease;
+ }
 

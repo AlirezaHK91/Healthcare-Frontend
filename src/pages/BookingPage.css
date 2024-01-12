@@ -14,9 +14,9 @@
    background-color: rgb(190, 190, 190);
    display: flex;
    flex-direction: column;
-   margin-bottom: 50px;
-   margin-top: 50px;
    border-radius: 15px;
+   
+   margin: 50px 10px 50px 10px;
 }
 
 .form {
@@ -40,6 +40,7 @@
    margin-top: 20px;
    border-radius: 5px;
    height: 100px;
+   text-align: start;
 }
 
 .btn {
@@ -54,6 +55,11 @@
    border-radius: 20px;
 }
 
+.book-btn:hover {
+   border: 2px solid black;
+   
+}
+
 .book-btn {
    margin-top: 20px;
    width: 60%;
@@ -62,3 +68,16 @@
    height: 50px;
    align-self: center;
 }
+
+li {
+   cursor: pointer;
+}
+
+li:hover {
+   font-weight: bold;
+}
+
+li:active {
+   font-weight: bold;
+}
+

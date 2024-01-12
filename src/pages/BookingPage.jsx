@@ -13,6 +13,9 @@ function BookingPage() {
   const [user, setUser] = useState(0);
   const [clickedSchedule, setClickedSchedule] = useState(null);
   const [hoveredSchedule, setHoveredSchedule] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser) {
@@ -40,12 +43,16 @@ function BookingPage() {
           },
           withCredentials: true,
         });
-        alert("Booking confirmed");
+        setSuccessMessage("Booking confirmed");
+        setErrorMessage("");
       } catch (error) {
+        setErrorMessage("Error confirming booking. Please try again.");
         console.log("Error from client ", error.message);
+        setSuccessMessage("");
       }
     } else {
-      alert("Please fill in all required fields");
+      setErrorMessage("Please fill in all required fields");
+      setSuccessMessage("");
     }
   };
 
@@ -131,17 +138,24 @@ function BookingPage() {
 
             <div className="mb-4 w-full mx-auto flex-1 flex flex-col items-center justify-center">
           <textarea
+            type="text"
             placeholder="Describe your problem"
             rows={5}
-            value={handleInput}
+            onChange={handleInput}
+            name="description"
             className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4 mt-4 appearance-none focus:outline-none focus:border-blue"
           />
           </div>
 
-            <div style={{ textAlign: "center", fontWeight: "bold" }}>
-              <h3>Avaliable times</h3>
-            </div>
+            {schedules.length === 0 ? (
+              <p className="text-center text-lg mb-2">
+                No available times to book.
+              </p>
+            ) : (
             <ul>
+              <p className="text-center text-lg mb-2">
+                Available times
+              </p>
               {filterBySpeciality(speciality, schedules).map((schedule) => (
                 <li
                 className={`mb-3 border-4 border-gray-400 bg-gray-300 rounded p-4 ${clickedSchedule === schedule.id ? 'selected-booking' : ''} ${hoveredSchedule === schedule.id ? 'hovered-booking' : ''}`}
@@ -163,9 +177,15 @@ function BookingPage() {
                 </li>
               ))}
             </ul>
+            )}
             <button className="book-btn" onClick={(e) => handleSubmit(e)}>
               Book
             </button>
+            
+            {errorMessage && <p className="text-red-500 mt-4 text-center text-lg">{errorMessage}</p>}
+        {successMessage && (
+          <p className="text-green-700 text-md mt-4 text-center">{successMessage}</p>
+        )}
           </form>
         </div>
       </div>

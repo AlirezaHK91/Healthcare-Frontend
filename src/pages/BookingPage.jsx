@@ -181,6 +181,7 @@ function BookingPage() {
             <button className="book-btn" onClick={(e) => handleSubmit(e)}>
               Book
             </button>
+            
             {errorMessage && <p className="text-red-500 mt-4 text-center text-lg">{errorMessage}</p>}
         {successMessage && (
           <p className="text-green-700 text-md mt-4 text-center">{successMessage}</p>

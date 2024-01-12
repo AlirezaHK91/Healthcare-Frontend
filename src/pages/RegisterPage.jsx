@@ -160,6 +160,10 @@ function RegisterPage() {
               className="w-full text-center py-3 border-2 border-[#575757] rounded-lg bg-[#575757] text-black hover:bg-green-dark focus:outline-none my-1">
               Sign up
             </button>
+            {error && <p className="text-red-500 text-lg">{error}</p>}
+            {successMessage && (
+              <p className="text-green-700 text-md">{successMessage}</p>
+            )}
           </div>
         </div>
       </div>

@@ -99,13 +99,14 @@ function NavBar() {
                 display: { xs: "none", md: "flex" },
                 fontFamily: "monospace",
                 fontWeight: 700,
-                letterSpacing: ".3rem",
+                letterSpacing: ".5rem",
                 color: "#A3B8CB",
                 textDecoration: "none",
                 fontSize: "1.5rem",
               }}
             >
               Healthcare AB
+              <img className="dr w-8" src={DR} alt="" />
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -170,7 +171,7 @@ function NavBar() {
               Healthcare AB 
               <img className="dr w-8" src={DR} alt="" />
             </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, justifyContent: "flex-end", marginRight:"30px" }}>
               {pages.map((page) => (
                 <Link
                   key={page.name}

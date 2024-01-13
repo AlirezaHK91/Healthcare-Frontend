@@ -1,22 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import Lambo from'../assets/care.png';
+import { Link, useNavigate} from "react-router-dom";
+import med from'../assets/care.png';
 
 const HomePage = () => {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate()
 
-  const getRandomAuctions = (arr, count) => {
-    const shuffled = arr.sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, count);
-  };
-
-  const buttonStyle = {
-    border: "1px solid transparent",
-    fontSize: "medium",
-    borderRadius: "8px",
-    padding: "10px 20px",
-    transition: "background-color 0.3s ease-in-out",
-  };
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    setIsLoggedIn(!!storedUser);
+  }, []);
 
   return (
     <>
@@ -39,24 +32,23 @@ const HomePage = () => {
             marginTop: "50px",
           }}
         >
-          <img src={Lambo} alt="Car Placeholder" style={{ maxWidth: "70%" }} />
-          <Link
-            to={`/booking`}
-            style={{ textDecoration: "none", marginTop: "10px", display: "block" }}
+          <img src={med} alt="Car Placeholder" style={{ maxWidth: "70%" }} />
+          <Link to={isLoggedIn ? "/booking" : "/loginpage"}
+              style={{ textDecoration: "none", marginTop: "10px", display: "block" }}
           >
-            <button
-              className="button1 bg-[#82a9ab]"
-              style={{
-                fontSize: "16px",
-                borderRadius: "8px",
-                padding: "13px 25px 13px 25px",
-                cursor: "pointer",
-                marginTop: "50%",
-              }}
-            >
-              Book appointment
+              <button
+                  className="button1 bg-[#82a9ab]"
+                  style={{
+                  fontSize: "16px",
+                  borderRadius: "8px",
+                  padding: "13px 25px 13px 25px",
+                  cursor: "pointer",
+                  marginTop: "50%",
+                }}
+              >
+          Book appointment
             </button>
-          </Link>
+        </Link>
         </div>
     </>
   );

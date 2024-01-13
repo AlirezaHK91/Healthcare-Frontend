@@ -2,6 +2,7 @@ import { FaStar } from "react-icons/fa";
 import feedback from "../assets/feed.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Modal from "../components/Modal";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -14,6 +15,8 @@ export default function ReviewPage() {
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -65,11 +68,19 @@ export default function ReviewPage() {
         withCredentials: true,
       });
       setSuccessMessage("Review submitted successfully");
+      setErrorMessage("");
+      setModalMessage("Thanks for your feedback");
+      setIsModalOpen(true)
       console.log("Review submitted successfully:", response.data);
     } catch (error) {
       setErrorMessage("Error submitting review. Please try again later.");
       console.error("Error submitting review:", error.message);
     }
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    window.location.reload();
   };
 
   return (
@@ -153,6 +164,11 @@ export default function ReviewPage() {
         {successMessage && (
           <p className="text-green-700 text-md">{successMessage}</p>
         )}
+        <Modal
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        successMessage={modalMessage}
+      />
       </div>
     </div>
   );

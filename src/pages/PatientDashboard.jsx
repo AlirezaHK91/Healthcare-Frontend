@@ -140,9 +140,11 @@ function PatienDashboard() {
     
         console.log(res);
         setSuccessMessage(formType === "userDetails" ? "User information updated successfully!" : "Password updated successfully!");
+        setError("");
       } catch (error) {
         console.error("Error from react:", error.message);
         setError(formType === "userDetails" ? "User information updateUser failed. Please try again." : "Password update failed. Please try again.");
+        setSuccessMessage("");
       }
     };
 

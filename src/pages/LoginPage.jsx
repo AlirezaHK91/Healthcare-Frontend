@@ -3,7 +3,9 @@ import axios from "axios";
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import loginimg from "../assets/loginimg.png"
 const apiUrl = import.meta.env.VITE_API_URL;
+
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -60,7 +62,7 @@ function LoginPage() {
       <div className="pt-28 h-full lg:pt-25 ">
         <div className="container max-w-lg mx-auto flex-1 flex flex-col items-center justify-center lg:px-8">
           <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full">
-            <h1 className="mb-8 text-3xl text-center">Sign in</h1>
+            <h1 className="mb-3 text-3xl text-center">Sign in</h1> <img className="w-16 mb-4 ml-36" src={loginimg} alt="" />
             <input
               type="text"
               name="username"

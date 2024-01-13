@@ -246,13 +246,14 @@ function NavBar() {
                   <a
                     href="/loginpage"
                     style={{
-                      padding: "5px 10px",
+                      padding: "5px",
                       borderRadius: "5px",
                       color: "black",
                       backgroundColor: "#A3B8CB",
                       transition: "background-color 0.3s",
                       textDecoration: "none",
                       display: "inline-block",
+                      fontSize:"0.9rem"
                     }}
                   >
                     Login
@@ -262,13 +263,14 @@ function NavBar() {
                   <a
                     href="/register"
                     style={{
-                      padding: "5px 10px",
+                      padding: "5px",
                       borderRadius: "5px",
                       color: "black",
                       backgroundColor: "#A3B8CB",
                       transition: "background-color 0.3s",
                       textDecoration: "none",
                       display: "inline-block",
+                      fontSize:"0.9rem"
                     }}
                   >
                     Register

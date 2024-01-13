@@ -5,6 +5,7 @@ import { TextField } from "@mui/material";
 import { style } from "@mui/system";
 import spec from "../assets/spec.png"
 import prac from "../assets/perac.png"
+import Modal from "../components/Modal";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -17,6 +18,8 @@ function BookingPage() {
   const [hoveredSchedule, setHoveredSchedule] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -38,6 +41,11 @@ function BookingPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (user !== 0 && scheduleId !== 0 && speciality !== 0) {
+      if (!booking.description.trim()) {
+        setErrorMessage("Description should not be empty");
+        setSuccessMessage("");
+        return;
+      }
       try {
         await axios.post(`${apiUrl}/api/auth/booking`, booking, {
           headers: {
@@ -47,6 +55,8 @@ function BookingPage() {
         });
         setSuccessMessage("Booking confirmed");
         setErrorMessage("");
+        setModalMessage("A confirmation will be sent to your email address.");
+        setIsModalOpen(true);
       } catch (error) {
         setErrorMessage("Error confirming booking. Please try again.");
         console.log("Error from client ", error.message);
@@ -105,6 +115,11 @@ function BookingPage() {
     }
   };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+    window.location.reload();
+  };
+
   return (
     <>
     <div
@@ -118,7 +133,7 @@ function BookingPage() {
       color: "#000",
       textAlign: "center",
       display: "flex",
-      flexDirection: "row", // Set flex direction to row
+      flexDirection: "row",
   }}
 >
   <span style={{ fontSize: "17px"}}>
@@ -209,11 +224,16 @@ function BookingPage() {
           <p className="text-green-700 text-md mt-4 text-center">{successMessage}</p>
         )}
           </form>
+          <Modal
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        successMessage={modalMessage}
+        successMessage1={successMessage}
+      />
+          </div>
+          </div>
         </div>
-      </div>
-    </div>
     </>
   );
 }
-
 export default BookingPage;

@@ -139,7 +139,7 @@ function BookingPage() {
   <span style={{ fontSize: "17px"}}>
     Booking appointments
   </span>
-  <img className="w-6 ml-2" src={spec} alt="" />
+  <img className="w-7 ml-2" src={spec} alt="" />
 </div>
     <div className="container -mt-14">
       <div className="flex-container flex-co flex flex-1">
@@ -195,7 +195,7 @@ function BookingPage() {
               {filterBySpeciality(speciality, schedules).map((schedule) => (
                 
                 <li
-                className={`mb-3 border-4 border-gray-400 bg-gray-300 rounded p-2 ${clickedSchedule === schedule.id ? 'selected-booking' : ''} ${hoveredSchedule === schedule.id ? 'hovered-booking' : ''}`}
+                className={`list mb-3 border-2 border-gray-400 bg-gray-300 rounded p-2 ${clickedSchedule === schedule.id ? 'selected-booking' : ''} ${hoveredSchedule === schedule.id ? 'hovered-booking' : ''}`}
                   key={schedule.id}
                   onClick={() => {
                     setScheduleId(clickedSchedule === schedule.id ? 0 : schedule.id);
@@ -205,11 +205,11 @@ function BookingPage() {
                   value={schedule.id}
                   style={{ fontSize: "12px" }}
                 >
+                  <strong>Specialist:</strong> {schedule.speciality} <img className="inline-block w-6 mb-2" src={prac} alt="" />
+                  <br />
                   <strong>Date:</strong> {schedule.date}
                   <br />
                   <strong>Time:</strong> {schedule.time}
-                  <br />
-                  <strong>Specialist:</strong> {schedule.speciality} <img className="inline-block w-7 mb-5" src={prac} alt="" />
                   <br />
                 </li>
               ))}

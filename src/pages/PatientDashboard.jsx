@@ -4,6 +4,7 @@ import axios from "axios";
 import edit from "../assets/edit.png"
 import pass from "../assets/pass.png"
 import view from "../assets/view.png"
+import perac from "../assets/perac.png"
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -322,10 +323,10 @@ function PatienDashboard() {
         <div className="booking-list text-sm">
           <ul>
             {bookings.map((booking) => (
-              <li className="mb-7 border-4 border-gray-400 rounded p-4 " key={booking.id} >
+              <li className="mb-1 border-2 border-gray-400 bg-gray-300 rounded p-2 text-xs " key={booking.id} >
+                 <strong>Specialist:</strong> {booking.speciality}<img className="inline-block w-7 mb-2" src={perac} alt="" /><br />
                 <strong>Date:</strong> {booking.schedule.date}<br />
                 <strong>Time:</strong> {booking.schedule.time}<br />
-                <strong>Specialist:</strong> {booking.speciality}<br />
 
                 <button
               className="mt-2 p-1 bg-red-500 text-white rounded hover:bg-red-700"

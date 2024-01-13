@@ -54,11 +54,6 @@
    border-radius: 20px;
 }
 
-.book-btn:hover {
-   border: 2px solid black;
-   
-}
-
 .book-btn {
    margin-top: 20px;
    width: 60%;
@@ -72,11 +67,11 @@ li {
    cursor: pointer;
 }
 
-li:hover {
+li.list:hover {
    font-weight: bold;
 }
 
-li:active {
+li.list:active {
    font-weight: bold;
    font-size: 14px; 
 }

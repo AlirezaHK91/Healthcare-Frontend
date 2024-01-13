@@ -1,7 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import registerimg from "../assets/register.png"
+import patient from "../assets/patient.png"
+import staff from "../assets/staff.png"
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -80,7 +81,12 @@ function RegisterPage() {
       <div className="pt-28 h-full p-4 lg:pt-25 ">
         <div className="container max-w-lg flex-1 mx-auto flex flex-col items-center justify-center lg:px-4 ">
           <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full  ">
-            <h1 className="text-3xl text-center mb-3">Sign up</h1> <img className="w-14 mb-4 ml-36" src={registerimg} alt="" />
+            <h1 className="text-3xl text-center mb-3">Sign up</h1> 
+            {roles[0] === "user" ? (
+              <img className="w-15 ml-44 sm:ml-32" src={patient} alt="" />
+            ) : (
+              <img className="w-15 ml-44 sm:ml-32" src={staff} alt="" />
+            )}
 
             <select
               name="roles"

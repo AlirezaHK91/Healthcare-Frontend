@@ -83,9 +83,9 @@ function RegisterPage() {
           <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full  ">
             <h1 className="text-3xl text-center mb-3">Sign up</h1> 
             {roles[0] === "user" ? (
-              <img className="w-15 ml-44 sm:ml-32" src={patient} alt="" />
+              <img className="w-20 mb-4 ml-48 sm:ml-28" src={patient} alt="" />
             ) : (
-              <img className="w-15 ml-44 sm:ml-32" src={staff} alt="" />
+              <img className="w-20 mb-4 ml-48 sm:ml-28" src={staff} alt="" />
             )}
 
             <select
@@ -121,7 +121,7 @@ function RegisterPage() {
               type="text"
               name="fullName"
               placeholder="Fullname"
-              className="inline-block border-2 border-[#575757] w-48 p-1 rounded-lg mb-4 mr-10 lg:w-full"
+              className="inline-block border-2 border-[#575757] w-full p-1 rounded-lg mb-4 mr-10 lg:w-full"
               value={fullName}
               onChange={(e) => onInputChange(e)}
             />
@@ -130,7 +130,7 @@ function RegisterPage() {
               type="text"
               name="username"
               placeholder="Username"
-              className="inline-block border-2 border-[#575757] w-48 p-1 rounded-lg mb-4 mr-10 lg:w-full"
+              className="inline-block border-2 border-[#575757] w-full p-1 rounded-lg mb-4 mr-10 lg:w-full"
               value={username}
               onChange={(e) => onInputChange(e)}
             />
@@ -138,7 +138,7 @@ function RegisterPage() {
               type="text"
               name="email"
               placeholder="Email"
-              className="inline-block border-2 border-[#575757] w-48 p-1 rounded-lg mb-4 mr-10 lg:w-full"
+              className="inline-block border-2 border-[#575757] w-full p-1 rounded-lg mb-4 mr-10 lg:w-full"
               value={email}
               onChange={(e) => onInputChange(e)}
             />
@@ -147,7 +147,7 @@ function RegisterPage() {
               type="password"
               name="password"
               placeholder="Password"
-              className="inline-block border-2 border-[#575757] w-48 p-1 rounded-lg mb-4 mr-10 lg:w-full"
+              className="inline-block border-2 border-[#575757] w-full p-1 rounded-lg mb-4 mr-10 lg:w-full"
               value={password}
               onChange={(e) => onInputChange(e)}
             />
@@ -164,7 +164,7 @@ function RegisterPage() {
 
             <button
               type="submit"
-              className="w-full text-center py-3 border-2 border-[#575757] rounded-lg bg-[#82a9ab] text-black hover:bg-green-dark focus:outline-none my-1">
+              className="w-full text-center py-3 border-[#575757] rounded-lg bg-[#82a9ab] text-black hover:bg-green-dark focus:outline-none my-1">
               Sign up
             </button>
             {error && <p className="text-red-500 text-lg">{error}</p>}

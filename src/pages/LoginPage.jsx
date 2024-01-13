@@ -61,12 +61,12 @@ function LoginPage() {
     <form onSubmit={handleSubmit}>
       <div className="pt-28 h-full lg:pt-25 ">
         <div className="container max-w-lg mx-auto flex-1 flex flex-col items-center justify-center lg:px-8">
-          <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full">
-            <h1 className="mb-3 text-3xl text-center">Sign in</h1> <img className="w-16 mb-4 ml-36" src={loginimg} alt="" />
+          <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full items-center justify-center">
+            <h1 className="mb-3 text-3xl text-center">Sign in</h1> <img className="w-20 mb-4 ml-48 sm:ml-28" src={loginimg} alt="" />
             <input
               type="text"
               name="username"
-              className="inline-block border-2 border-[#575757] w-48 p-1 rounded-lg mb-4 mr-10 lg:w-full"
+              className="inline-block border-2 border-[#575757] w-full p-1 rounded-lg mb-4 mr-10 lg:w-full"
               placeholder="Username *"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -74,7 +74,7 @@ function LoginPage() {
             <input
               type="password"
               name=""
-              className="inline-block border-2 border-[#575757] w-48 p-1 rounded-lg mb-4 mr-10 lg:w-full"
+              className="inline-block border-2 border-[#575757] w-full p-1 rounded-lg mb-4 mr-10 lg:w-full"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -92,7 +92,7 @@ function LoginPage() {
 
             <button
               type="submit"
-              className="w-full text-center py-3 border-2 border-[#575757] rounded-lg bg-[#82a9ab] text-black hover:bg-green-dark focus:outline-none my-1">
+              className="w-full text-center py-3 border-[#575757] rounded-lg bg-[#82a9ab] text-black hover:bg-green-dark focus:outline-none my-1">
               Sign in
             </button>
             {error && <p className="text-red-500 text-lg">{error}</p>}

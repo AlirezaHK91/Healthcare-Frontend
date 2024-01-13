@@ -161,7 +161,7 @@ function NavBar() {
                 display: { xs: "flex", md: "none" },
                 fontFamily: "monospace",
                 fontWeight: 700,
-                letterSpacing: ".3rem",
+                letterSpacing: ".2rem",
                 color: "#A3B8CB",
                 textDecoration: "none",
                 fontSize:"20px",

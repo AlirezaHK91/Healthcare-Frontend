@@ -25,7 +25,7 @@ export default function Footer({title, description}) {
 
   return (
     <Box component="footer" sx={{ bgcolor: '#A3B8CB', py: 6 , position: "sticky"}}>
-      <Container maxWidth="lg">
+      <Container maxWidth="100%">
         
         <Copyright/>
 

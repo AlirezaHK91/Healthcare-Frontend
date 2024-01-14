@@ -10,6 +10,7 @@ import Footer from "./Footer";
 import Header from "./Header";
 import PatienDashboard from "./pages/PatientDashboard";
 import ReviewPage from "./pages/ReviewPage";
+import StaffDashboard from "./pages/StaffDashboard";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="/loginpage" element={<LoginPage />} />
           <Route path="/dashboard-patient" element={<PatienDashboard />} />
           <Route path="/review" element={<ReviewPage />} />
+          <Route path="/dashboard-staff" element={<StaffDashboard />} />
 
         </Routes>
         </div>

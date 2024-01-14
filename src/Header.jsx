@@ -20,6 +20,7 @@ import { CssBaseline } from "@mui/material";
 const pages = [
   { name: "Home", page: "/" },
   { name: "Booking", page: "/booking" },
+  { name: "Schedule", page: "/dashboard-staff" },
   { name: "Feedback", page: "/review" }
 ];
 

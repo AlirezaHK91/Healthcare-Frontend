@@ -9,6 +9,14 @@ const StaffDashboard = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [combinedDateTime, setCombinedDateTime] = useState(null);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [schedule, setSchedule] = useState({
+    user: [user.id],
+    date: [selectedDate],
+    time: [selectedTime],
+    isAvailable: [true],
+    speciality: []
+  });
 
   const handleDateChange = (date) => {
     setSelectedDate(date);

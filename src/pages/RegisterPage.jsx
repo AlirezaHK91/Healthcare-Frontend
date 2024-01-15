@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import patient from "../assets/patient.png"
+import staff from "../assets/staff.png"
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -76,10 +78,15 @@ function RegisterPage() {
 
   return (
     <form onSubmit={(e) => onSubmit(e)}>
-      <div className="pt-28 h-full lg:pt-25 ">
+      <div className="pt-28 h-full p-4 lg:pt-25 ">
         <div className="container max-w-lg flex-1 mx-auto flex flex-col items-center justify-center lg:px-4 ">
           <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full  ">
-            <h1 className="mb-8 text-3xl text-center">Sign up</h1>
+            <h1 className="text-3xl text-center mb-3">Sign up</h1> 
+            {roles[0] === "user" ? (
+              <img className="w-20 mb-4 ml-48 sm:ml-28" src={patient} alt="" />
+            ) : (
+              <img className="w-20 mb-4 ml-48 sm:ml-28" src={staff} alt="" />
+            )}
 
             <select
               name="roles"
@@ -114,7 +121,7 @@ function RegisterPage() {
               type="text"
               name="fullName"
               placeholder="Fullname"
-              className="inline-block border-2 border-[#575757] w-48 p-1 rounded-lg mb-4 mr-10 lg:w-full"
+              className="inline-block border-2 border-[#575757] w-full p-1 rounded-lg mb-4 mr-10 lg:w-full"
               value={fullName}
               onChange={(e) => onInputChange(e)}
             />
@@ -123,7 +130,7 @@ function RegisterPage() {
               type="text"
               name="username"
               placeholder="Username"
-              className="inline-block border-2 border-[#575757] w-48 p-1 rounded-lg mb-4 mr-10 lg:w-full"
+              className="inline-block border-2 border-[#575757] w-full p-1 rounded-lg mb-4 mr-10 lg:w-full"
               value={username}
               onChange={(e) => onInputChange(e)}
             />
@@ -131,7 +138,7 @@ function RegisterPage() {
               type="text"
               name="email"
               placeholder="Email"
-              className="inline-block border-2 border-[#575757] w-48 p-1 rounded-lg mb-4 mr-10 lg:w-full"
+              className="inline-block border-2 border-[#575757] w-full p-1 rounded-lg mb-4 mr-10 lg:w-full"
               value={email}
               onChange={(e) => onInputChange(e)}
             />
@@ -140,7 +147,7 @@ function RegisterPage() {
               type="password"
               name="password"
               placeholder="Password"
-              className="inline-block border-2 border-[#575757] w-48 p-1 rounded-lg mb-4 mr-10 lg:w-full"
+              className="inline-block border-2 border-[#575757] w-full p-1 rounded-lg mb-4 mr-10 lg:w-full"
               value={password}
               onChange={(e) => onInputChange(e)}
             />
@@ -157,9 +164,13 @@ function RegisterPage() {
 
             <button
               type="submit"
-              className="w-full text-center py-3 border-2 border-[#575757] rounded-lg bg-[#575757] text-black hover:bg-green-dark focus:outline-none my-1">
+              className="w-full text-center py-3 border-[#575757] rounded-lg bg-[#82a9ab] text-black hover:bg-green-dark focus:outline-none my-1">
               Sign up
             </button>
+            {error && <p className="text-red-500 text-lg">{error}</p>}
+            {successMessage && (
+              <p className="text-green-700 text-md">{successMessage}</p>
+            )}
           </div>
         </div>
       </div>

@@ -1,0 +1,95 @@
+.container {
+   display: flex;
+   justify-content: center;
+   
+   
+}
+
+.flex-container {
+   justify-content: center;
+   width: 500px;
+   min-width: 370px;
+   max-width: 700px;
+   align-items: center;
+   background-color: #BFC3CC;
+   display: flex;
+   flex-direction: column;
+   border-radius: 15px;
+   margin: 50px 30px 50px 30px;
+}
+
+.form {
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+   margin-bottom: 20px;
+}
+
+.input-fields {
+   display: flex;
+   flex-direction: column;
+   
+   
+}
+
+.name-field {
+   border-radius: 5px;
+}
+.description-field {
+   margin-top: 20px;
+   border-radius: 5px;
+   height: 100px;
+   text-align: start;
+}
+
+.btn {
+   margin-top: 20px;
+   width: 100%;
+   border-radius: 10px;
+   background-color: white;
+   height: 35px;
+}
+
+#root > div > div > div > div > div > form > div.MuiStack-root.css-1rv8zyt-MuiStack-root > div {
+   border-radius: 20px;
+}
+
+.book-btn {
+   margin-top: 20px;
+   width: 60%;
+   border-radius: 10px;
+   background-color: rgb(110, 110, 110);
+   height: 50px;
+   align-self: center;
+}
+
+li {
+   cursor: pointer;
+}
+
+li.list:hover {
+   font-weight: bold;
+}
+
+li.list:active {
+   font-weight: bold;
+   font-size: 14px; 
+}
+
+li.hovered-booking {
+   font-weight: bold;
+   font-size: 14px; 
+   
+}
+
+li.selected-booking {
+   font-weight: bold;
+   border-color: rgb(98, 98, 98);
+   
+}
+
+.booking-list-item {
+   font-size: 14px;
+   transition: font-size 0.3s ease;
+ }
+

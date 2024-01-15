@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
-import { AuthContext } from "./context/Authcontext";
+import { AuthContext } from "./context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -16,6 +16,7 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { CssBaseline } from "@mui/material";
+import DR from "./assets/dr.png"
 
 const pages = [
   { name: "Home", page: "/" },
@@ -69,8 +70,8 @@ function NavBar() {
     if (setting === "Logout") {
       logout();
       setTimeout(() => {
-        navigate("loginpage");
-      }, 200);
+        navigate("/");
+      }, 500);
 
     } else if (setting === "Dashboard") {
       if(roles.includes("ROLE_USER")){
@@ -99,13 +100,14 @@ function NavBar() {
                 display: { xs: "none", md: "flex" },
                 fontFamily: "monospace",
                 fontWeight: 700,
-                letterSpacing: ".3rem",
+                letterSpacing: ".5rem",
                 color: "#A3B8CB",
                 textDecoration: "none",
                 fontSize: "1.5rem",
               }}
             >
               Healthcare AB
+              <img className="dr w-8" src={DR} alt="" />
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -156,18 +158,21 @@ function NavBar() {
               component="a"
               href="/"
               sx={{
-                mr: 8,
+                mr: 7,
                 display: { xs: "flex", md: "none" },
                 fontFamily: "monospace",
                 fontWeight: 700,
-                letterSpacing: ".3rem",
+                letterSpacing: ".2rem",
                 color: "#A3B8CB",
                 textDecoration: "none",
+                fontSize:"20px",
+                
               }}
             >
-              Healthcare AB
+              Healthcare AB 
+              <img className="dr w-8" src={DR} alt="" />
             </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, justifyContent: "flex-end", marginRight:"30px" }}>
               {pages.map((page) => (
                 <Link
                   key={page.name}
@@ -243,13 +248,14 @@ function NavBar() {
                   <a
                     href="/loginpage"
                     style={{
-                      padding: "5px 10px",
+                      padding: "5px",
                       borderRadius: "5px",
                       color: "black",
                       backgroundColor: "#A3B8CB",
                       transition: "background-color 0.3s",
                       textDecoration: "none",
                       display: "inline-block",
+                      fontSize:"0.9rem"
                     }}
                   >
                     Login
@@ -259,13 +265,14 @@ function NavBar() {
                   <a
                     href="/register"
                     style={{
-                      padding: "5px 10px",
+                      padding: "5px",
                       borderRadius: "5px",
                       color: "black",
                       backgroundColor: "#A3B8CB",
                       transition: "background-color 0.3s",
                       textDecoration: "none",
                       display: "inline-block",
+                      fontSize:"0.9rem"
                     }}
                   >
                     Register

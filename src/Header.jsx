@@ -76,7 +76,7 @@ function NavBar() {
       if(roles.includes("ROLE_USER")){
         navigate("dashboard-patient")
       } else if (roles.includes("ROLE_ADMIN")) {
-        navigate("dashboard-admin")
+        navigate("dashboard-staff")
       }
      
     }

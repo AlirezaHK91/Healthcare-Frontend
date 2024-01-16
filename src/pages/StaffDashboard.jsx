@@ -7,25 +7,27 @@ import { DesktopTimePicker } from "@mui/x-date-pickers/DesktopTimePicker";
 import { parseISO, format } from "date-fns";
 import Modal from "../components/Modal";
 import spec from "../assets/spec.png";
-import prac from "../assets/perac.png";
+import perac from "../assets/perac.png";
+import edit from "../assets/edit.png";
+import pass from "../assets/pass.png";
+import view from "../assets/view.png";
 import { margin } from "@mui/system";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const StaffDashboard = () => {
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedTime, setSelectedTime] = useState(null);
   const [speciality, setSpeciality] = useState("");
-  const [combinedDateTime, setCombinedDateTime] = useState(null);
   const [user, setUser] = useState(0);
-  const [clickedSchedule, setClickedSchedule] = useState(null);
-  const [hoveredSchedule, setHoveredSchedule] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
-  const [schedules, setSchedules] = useState([]);
-  const [schedule, setSchedule] = useState({user: {id: user}});
+  const [schedule, setSchedule] = useState({ user: { id: user } });
+  const [bookings, setBookings] = useState([]);
+  const [isUserDetailsFormExpanded, setIsUserDetailsFormExpanded] =
+    useState(true);
+  const [isPasswordFormExpanded, setIsPasswordFormExpanded] = useState(false);
+  const [isBookingFormExpanded, setIsBookingFormExpanded] = useState(false);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -37,10 +39,14 @@ const StaffDashboard = () => {
 
   useEffect(() => {
     setSchedule((prevSchedule) => {
-      const updateUser = {...prevSchedule, user: {id: user}, isAvailable: true}
+      const updateUser = {
+        ...prevSchedule,
+        user: { id: user },
+        isAvailable: true,
+      };
       setSchedule(updateUser);
-    })
-  }, [user])
+    });
+  }, [user]);
 
   const updateSchedule = (e) => {
     console.log("Before Schedulestate: ", schedule);
@@ -54,82 +60,6 @@ const StaffDashboard = () => {
       const updateSpeciality = { ...schedule, speciality: e.target.value };
       setSchedule(updateSpeciality);
     }
-  };
-  // useEffect(() => {
-  //   console.log("Fetching schedules...");
-  //   const getSchedules = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `${apiUrl}/api/auth/schedule/get-all`,
-  //         {
-  //           withCredentials: true,
-  //         }
-  //       );
-  //       const scheduleData = response.data;
-  //       const scheduleAvailable = scheduleData.filter(
-  //         (schedule) => schedule.isAvailable
-  //       );
-  //       setSchedules(scheduleAvailable);
-  //     } catch (error) {
-  //       console.error("Error fetching scedules:", error.message);
-  //     }
-  //   };
-  //   getSchedules();
-  // }, []);
-
-  // useEffect(() => {
-  //   updateSchedule();
-  // },[selectedDate][selectedDate])
-
-  const handleDateChange = (e) => {
-    console.log("event date: ", e);
-    // setSchedule((prevSchedule) => {
-    //   const updatedSchedule = { ...prevSchedule };
-
-    //   updatedSchedule[date] = date
-
-    // }
-    // );
-    // handleTimeChange(date);
-    updateSchedule(e);
-  };
-
-  const handleTimeChange = (time) => {
-    console.log("Time picked: ", time);
-    // const formattedTime = formatTimeToHHMMSS(time);
-    setSelectedTime(time);
-    updateSchedule();
-  };
-
-  // function formatTimeToHHMMSS(timeString) {
-  //   const dateTime = parseISO(timeString);
-  //   const formattedTime = format(dateTime, "HH:mm:ss");
-  //   return formattedTime;
-  // }
-
-  // const combineDateTime = (date, time) => {
-  //   if (date && time) {
-  //     const combinedDateTime = new Date(
-  //       date.getFullYear(),
-  //       date.getMonth(),
-  //       date.getDate(),
-  //       time.getHours(),
-  //       time.getMinutes()
-  //     );
-  //     setCombinedDateTime(combinedDateTime);
-  //   }
-  // };
-
-
-
-  const handleInput = (e) => {
-    if (e.target.name === "speciality") {
-      setSpeciality(e.target.value);
-      updateSchedule();
-    }
-
-    console.log(e.target.schedule);
-    setSchedule({ ...schedule, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -157,20 +87,189 @@ const StaffDashboard = () => {
     }
   };
 
-  // const filterBySpeciality = (speciality, schedules) => {
-  //   if (speciality === "") {
-  //     return schedules  || [];
-  //   } else {
-  //     return (schedules || []).filter(
-  //       (schedule) => schedule.speciality === speciality && schedule.isAvailable
-  //     );
-  //   }
-  // };
   const closeModal = () => {
     setIsModalOpen(false);
     window.location.reload();
   };
   console.log("After Schedulestate: ", schedule);
+
+  const buttonStyle = {
+    width: "100%",
+    textAlign: "center",
+    padding: "12px",
+    borderRadius: "8px",
+    color: "black",
+    cursor: "pointer",
+    marginTop: "1rem",
+  };
+
+  const [updateUser, setUpdate] = useState({
+    fullName: "",
+    speciality: "",
+    username: "",
+    email: "",
+  });
+
+  const [updatePassword, setUpdatePassword] = useState({
+    password: "",
+  });
+
+  const toggleFormExpansion = (formType) => {
+    if (formType === "userDetails") {
+      setIsUserDetailsFormExpanded((prev) => !prev);
+      setIsPasswordFormExpanded(false);
+      setIsBookingFormExpanded(false);
+    } else if (formType === "password") {
+      setIsPasswordFormExpanded((prev) => !prev);
+      setIsUserDetailsFormExpanded(false);
+      setIsBookingFormExpanded(false);
+    } else if (formType === "bookingDetails") {
+      setIsBookingFormExpanded((prev) => !prev);
+      setIsUserDetailsFormExpanded(false);
+      setIsPasswordFormExpanded(false);
+    }
+  };
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/api/auth/user/${user}`, {
+          withCredentials: true,
+        });
+        const userInfo = response.data;
+        setUpdate(userInfo);
+        console.log("Stored user", userInfo);
+      } catch (error) {
+        console.error("Error fetching user information:", error.message);
+        setErrorMessage("Failed to fetch user information.");
+      }
+    };
+
+    if (user) {
+      getUserInfo();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    setSuccessMessage("");
+    setErrorMessage("");
+  }, [isUserDetailsFormExpanded, isPasswordFormExpanded]);
+
+  const onInputChange = (e, formType) => {
+    if (formType === "userDetails") {
+      setUpdate({ ...updateUser, [e.target.name]: e.target.value });
+    } else if (formType === "password") {
+      setUpdatePassword({ ...updatePassword, [e.target.name]: e.target.value });
+    }
+  };
+
+  useEffect(() => {
+    const getBookings = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/api/auth/booking/getAll`, {
+          withCredentials: true,
+        });
+        const bookingData = response.data;
+
+        setBookings(bookingData);
+        console.log("Bookings:", bookingData);
+      } catch (error) {
+        console.error("Error fetching bookings:", error.message);
+        setErrorMessage("Failed to fetch booking details.");
+      }
+    };
+
+    if (user && isBookingFormExpanded) {
+      getBookings();
+    }
+  }, [user, isBookingFormExpanded]);
+
+  const onSubmit = async (e, formType) => {
+    e.preventDefault();
+    setErrorMessage("");
+    setSuccessMessage("");
+
+    try {
+      let res;
+      if (formType === "userDetails") {
+        res = await axios.put(
+          `${apiUrl}/api/auth/update-user/${user}`,
+          updateUser,
+          { withCredentials: true }
+        );
+      } else if (formType === "password") {
+        res = await axios.put(
+          `${apiUrl}/api/auth/update-password/${user}?newPassword=${updatePassword.password}`,
+          { withCredentials: true }
+        );
+      }
+
+      console.log(res);
+      setSuccessMessage(
+        formType === "userDetails"
+          ? "User information updated successfully!"
+          : "Password updated successfully!"
+      );
+      setErrorMessage("");
+    } catch (error) {
+      console.error("Error from react:", error.message);
+      setErrorMessage(
+        formType === "userDetails"
+          ? "User information updateUser failed. Please try again."
+          : "Password update failed. Please try again."
+      );
+      setSuccessMessage("");
+    }
+  };
+
+  const setDoneBooking = async (booking) => {
+    try {
+      const response = await axios.put(
+        `${apiUrl}/api/auth/booking/setIsDone/${
+          booking.id
+        }?isDone=${!booking.isDone}`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+
+      const updatedBooking = response.data;
+
+      const index = bookings.findIndex((b) => b.id === updatedBooking.id);
+      if (index !== -1) {
+        setBookings((prevBookings) => [
+          ...prevBookings.slice(0, index),
+          updatedBooking,
+          ...prevBookings.slice(index + 1),
+        ]);
+      }
+    } catch (error) {
+      console.error("Failed to set booking to done.", error.message);
+      setErrorMessage("Failed to set booking to done.");
+    }
+  };
+
+  const cancelBooking = async (bookingId) => {
+    try {
+      const response = await axios.delete(
+        `${apiUrl}/api/auth/booking/delete/${bookingId}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      console.log(response.data);
+
+      setBookings((prevBookings) =>
+        prevBookings.filter((booking) => booking.id !== bookingId)
+      );
+    } catch (error) {
+      console.error("Error canceling booking:", error.message);
+      setErrorMessage("Failed to cancel booking.");
+    }
+  };
+
   return (
     <>
       <div
@@ -201,28 +300,6 @@ const StaffDashboard = () => {
               alignItems: "center",
             }}
           >
-            {/* 
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <div className="m-2">
-                <DesktopDatePicker
-                  label="Select Date"
-                  value={selectedDate}
-                  onChange={handleDateChange}
-                  inputFormat="YYYY-MM-DD"
-                />
-              </div>
-              <div>
-                <DesktopTimePicker
-                  label="Select Time"
-                  value={selectedTime}
-                  onChange={handleTimeChange}
-                  inputFormat="HH:mm:ss"
-                />
-              </div>
-              
-              <div>{combinedDateTime && combinedDateTime.toLocaleString()}</div>
-            </LocalizationProvider> 
-            */}
             <input
               type="date"
               className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
@@ -261,50 +338,6 @@ const StaffDashboard = () => {
                 <option value="PSYCHOLOGIST">Psychologist</option>
                 <option value="BVC_NURSE">Bvc Nurse</option>
               </select>
-              {schedules.length === 0 ? (
-                <p className="text-center text-lg mb-2">
-                  No available times to book.
-                </p>
-              ) : (
-                <ul>
-                  <p className="text-center text-lg mb-2">Available times</p>
-                  {/* {filterBySpeciality(speciality, schedules).map((schedule) => (
-                    <li
-                      className={`list mb-3 border-2 border-gray-400 bg-gray-300 rounded p-2 ${
-                        clickedSchedule === schedule.id
-                          ? "selected-booking"
-                          : ""
-                      } ${
-                        hoveredSchedule === schedule.id ? "hovered-booking" : ""
-                      }`}
-                      key={schedule.id}
-                      onClick={() => {
-                        setScheduleId(
-                          clickedSchedule === schedule.id ? 0 : schedule.id
-                        );
-                        setClickedSchedule(
-                          clickedSchedule === schedule.id ? null : schedule.id
-                        );
-                      }}
-                      name="scheduleId"
-                      value={schedule.id}
-                      style={{ fontSize: "12px" }}
-                    >
-                      <strong>Specialist:</strong> {schedule.speciality}{" "}
-                      <img
-                        className="inline-block w-6 mb-2"
-                        src={prac}
-                        alt=""
-                      />
-                      <br />
-                      <strong>Date:</strong> {schedule.date}
-                      <br />
-                      <strong>Time:</strong> {schedule.time}
-                      <br />
-                    </li>
-                  ))} */}
-                </ul>
-              )}
               <button
                 className="book-btn bg-[#82a9ab]"
                 onClick={(e) => handleSubmit(e)}
@@ -323,7 +356,7 @@ const StaffDashboard = () => {
                 </p>
               )}
             </form>
-            
+
             <Modal
               isOpen={isModalOpen}
               closeModal={closeModal}
@@ -332,8 +365,136 @@ const StaffDashboard = () => {
             />
           </div>
         </div>
-        
       </div>
+      {/* update user */}
+      <div
+        className="form-toggle mb-4 w-96 mx-auto flex items-center justify-center lg:px-8"
+        onClick={() => toggleFormExpansion("userDetails")}
+        style={{
+          cursor: "pointer",
+          padding: "12px",
+          border: "1px solid #ccc",
+          borderRadius: "20px",
+          marginBottom: "10px",
+          backgroundColor: isUserDetailsFormExpanded ? "#A3B8CB" : "#506081",
+          color: isUserDetailsFormExpanded ? "#000" : "white",
+          textAlign: "center",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <span style={{ flex: "", marginLeft: "10px" }}>
+          Update user information
+        </span>
+        <img className="w-8" src={edit} alt="" />
+      </div>
+      <form
+        style={{ display: isUserDetailsFormExpanded ? "block" : "none" }}
+        onSubmit={(e) => onSubmit(e, "userDetails")}
+      >
+        <div className="container mb-7 max-w-lg mx-auto flex-1 flex flex-col items-center justify-center lg:px-8">
+          <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full">
+            <h1 className="mb-5 text-xl text-center">User information</h1>
+            <h6>Fullname</h6>
+            <input
+              type="text"
+              className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
+              name="fullname"
+              placeholder={updateUser.fullName || "Fullname"}
+              value={updateUser.firstName}
+              onChange={(e) => onInputChange(e, "userDetails")}
+            />
+            <h6>Username</h6>
+            <input
+              type="text"
+              className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
+              name="username"
+              placeholder={updateUser.username || "Username"}
+              value={updateUser.username}
+              onChange={(e) => onInputChange(e, "userDetails")}
+            />
+            <h6>Email</h6>
+            <input
+              type="text"
+              className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
+              name="email"
+              placeholder={updateUser.email || "Email"}
+              value={updateUser.email}
+              onChange={(e) => onInputChange(e, "userDetails")}
+            />
+
+            <button
+              type="submit"
+              className="w-full text-center py-3 rounded-lg bg-[#82a9ab] text-black hover:bg-green-dark focus:outline-none my-1"
+              style={buttonStyle}
+            >
+              Update
+            </button>
+            {errorMessage && (
+              <p className="text-red-500 text-lg">{errorMessage}</p>
+            )}
+            {successMessage && (
+              <p className="text-green-700 text-md">{successMessage}</p>
+            )}
+          </div>
+        </div>
+      </form>
+
+      {/* change password */}
+      <div
+        className="form-toggle mb-4 w-96 mx-auto flex items-center justify-center lg:px-8"
+        onClick={() => toggleFormExpansion("password")}
+        style={{
+          cursor: "pointer",
+          padding: "12px",
+          border: "1px solid #ccc",
+          borderRadius: "20px",
+          marginBottom: "10px",
+          backgroundColor: isPasswordFormExpanded ? "#A3B8CB" : "#506081",
+          color: isPasswordFormExpanded ? "#000" : "white",
+          textAlign: "center",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <span style={{ flex: "" }}>Update Password</span>
+        <img className="w-8 ml-2" src={pass} alt="" />
+      </div>
+      <form
+        style={{ display: isPasswordFormExpanded ? "block" : "none" }}
+        onSubmit={(e) => onSubmit(e, "password")}
+      >
+        <div className="container mb-7 max-w-lg mx-auto flex-1 flex flex-col items-center justify-center lg:px-8">
+          <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full">
+            <h1 className="mb-5 text-xl text-center">Password</h1>
+
+            <input
+              type="password"
+              className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
+              name="password"
+              placeholder="New password"
+              value={updatePassword.password}
+              onChange={(e) => onInputChange(e, "password")}
+            />
+
+            <button
+              type="submit"
+              className="w-full text-center py-3 rounded-lg bg-[#82a9ab] text-black hover:bg-green-dark focus:outline-none my-1"
+              style={buttonStyle}
+            >
+              Update
+            </button>
+            {errorMessage && (
+              <p className="text-red-500 text-lg">{errorMessage}</p>
+            )}
+            {successMessage && (
+              <p className="text-green-700 text-md">{successMessage}</p>
+            )}
+          </div>
+        </div>
+      </form>
+
+      {/* List Booking Details */}
       <div
         className="form-toggle mb-4 w-96 mx-auto flex items-center justify-center lg:px-8"
         onClick={() => toggleFormExpansion("bookingDetails")}
@@ -353,6 +514,45 @@ const StaffDashboard = () => {
         <span style={{ flex: "" }}>View Booking Details</span>
         <img className="w-8 ml-2" src={view} alt="" />
       </div>
+      {isBookingFormExpanded && (
+        <div className="container mb-32 max-w-lg mx-auto flex-1 flex flex-col items-center justify-center lg:px-8">
+          <div className="bg-[#BFC3CC] px-6 py-10 rounded-xl shadow-md text-black w-full">
+            <h1 className="mb-5 text-xl text-center">Upcoming appointments</h1>
+            <div className="booking-list text-sm">
+              <ul>
+                {bookings.map((booking) => (
+                  <li
+                    className="mb-1 border-2 border-gray-400 bg-gray-300 rounded p-2 text-xs "
+                    key={booking.id}
+                  >
+                    <strong>Specialist:</strong> {booking.speciality}
+                    <img className="inline-block w-7 mb-2" src={perac} alt="" />
+                    <br />
+                    <strong>Date:</strong> {booking.schedule.date}
+                    <br />
+                    <strong>Time:</strong> {booking.schedule.time}
+                    <br />
+                    <button
+                      className="mt-2 p-1 bg-red-500 text-white rounded hover:bg-red-700"
+                      onClick={() => cancelBooking(booking.id)}
+                    >
+                      Cancel Booking
+                    </button>
+                    <button
+                      className={`mt-2 float-right ml-6 p-1 rounded ${
+                        booking.isDone ? "bg-red-500" : "bg-green-500"
+                      } text-white`}
+                      onClick={() => setDoneBooking(booking)}
+                    >
+                      {!booking.isDone ? "In progress" : "Done"}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

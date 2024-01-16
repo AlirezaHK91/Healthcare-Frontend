@@ -21,7 +21,6 @@ import DR from "./assets/dr.png"
 const pages = [
   { name: "Home", page: "/" },
   { name: "Booking", page: "/booking" },
-  { name: "Schedule", page: "/dashboard-staff" },
   { name: "Feedback", page: "/review" }
 ];
 
@@ -77,7 +76,7 @@ function NavBar() {
       if(roles.includes("ROLE_USER")){
         navigate("dashboard-patient")
       } else if (roles.includes("ROLE_ADMIN")) {
-        navigate("dashboard-admin")
+        navigate("dashboard-staff")
       }
      
     }

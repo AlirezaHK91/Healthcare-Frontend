@@ -29,6 +29,8 @@ function NavBar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
   const [roles, setRoles] = useState("");
+  
+
 
   const settings = ["Dashboard", "Logout"];
   
@@ -49,6 +51,8 @@ function NavBar() {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+
+  const isAdminLoggedIn = isLoggedIn && roles.includes("ROLE_ADMIN");
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -206,8 +210,8 @@ function NavBar() {
                       alt={user.username}
                       src="/static/images/avatar/2.jpg"
                       sx={{
-                        backgroundColor: "#CAD7E3",
-                        color: "#506081",
+                        backgroundColor: isAdminLoggedIn ? "#C1A2A9" : "#CAD7E3",
+                        color: isAdminLoggedIn ? "black" : "#506081",
                         padding: "5px",
                       }}
                     >

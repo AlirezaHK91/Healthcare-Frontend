@@ -14,7 +14,7 @@ function PatienDashboard() {
   const [error, setError] = useState("");
   const [roles, setRoles] = useState("");
   const [bookings, setBookings] = useState([]);
-  const [isUserDetailsFormExpanded, setIsUserDetailsFormExpanded] = useState(true);
+  const [isUserDetailsFormExpanded, setIsUserDetailsFormExpanded] = useState(false);
   const [isPasswordFormExpanded, setIsPasswordFormExpanded] = useState(false);
   const [isBookingFormExpanded, setIsBookingFormExpanded] = useState(false);
 
@@ -42,16 +42,16 @@ function PatienDashboard() {
   const toggleFormExpansion = (formType) => {
     if (formType === "userDetails") {
       setIsUserDetailsFormExpanded((prev) => !prev);
-      setIsPasswordFormExpanded(false);
-      setIsBookingFormExpanded(false);
+      // setIsPasswordFormExpanded(false);
+      // setIsBookingFormExpanded(false);
     } else if (formType === "password") {
       setIsPasswordFormExpanded((prev) => !prev);
-      setIsUserDetailsFormExpanded(false);
-      setIsBookingFormExpanded(false);
+      // setIsUserDetailsFormExpanded(false);
+      // setIsBookingFormExpanded(false);
     }else if (formType === "bookingDetails") {
         setIsBookingFormExpanded((prev) => !prev);
-        setIsUserDetailsFormExpanded(false);
-        setIsPasswordFormExpanded(false);
+        // setIsUserDetailsFormExpanded(false);
+        // setIsPasswordFormExpanded(false);
     }
   };
 
@@ -324,9 +324,10 @@ function PatienDashboard() {
           <ul>
             {bookings.map((booking) => (
               <li className="mb-1 border-2 border-gray-400 bg-gray-300 rounded p-2 text-xs " key={booking.id} >
+                 {/* {booking.user.fullName}<br /> */}
                  <strong>Specialist:</strong> {booking.speciality}<img className="inline-block w-7 mb-2" src={perac} alt="" /><br />
                 <strong>Date:</strong> {booking.schedule.date}<br />
-                <strong>Time:</strong> {booking.schedule.time}<br />
+                <strong>Time:</strong> {booking.schedule.formattedTime}<br />
 
                 <button
               className="mt-2 p-1 bg-red-500 text-white rounded hover:bg-red-700"

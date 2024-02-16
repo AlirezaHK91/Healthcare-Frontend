@@ -1,6 +1,6 @@
 import React from "react";
 
-function Modal({ isOpen, closeModal, successMessage, successMessage1, errorMessage }) {
+function Modal({ isOpen, closeModal, successMessage, successMessage1, errorMessage, userEmail }) {
   return (
     <>
       {isOpen && (
@@ -10,6 +10,7 @@ function Modal({ isOpen, closeModal, successMessage, successMessage1, errorMessa
             <p className="text-green-900 text-xl mb-4">{successMessage1}</p>
             <p className="text-green-700 text-md mb-4">{successMessage}</p>
             <p className="text-red-700 text-md mb-4">{errorMessage}</p>
+            <p className="text-blue-700 text-md mb-4">{userEmail}</p>
             <button
               className="bg-[#8597b8] text-white px-4 py-2 rounded-md"
               onClick={closeModal}

@@ -19,9 +19,10 @@ const StaffDashboard = () => {
   const [schedule, setSchedule] = useState({ user: { id: user } });
   const [bookings, setBookings] = useState([]);
   const [isUserDetailsFormExpanded, setIsUserDetailsFormExpanded] =
-    useState(true);
+    useState(false);
   const [isPasswordFormExpanded, setIsPasswordFormExpanded] = useState(false);
   const [isBookingFormExpanded, setIsBookingFormExpanded] = useState(false);
+  const [isCreateScheduleFormExpanded, setIsCreateScheduleFormExpanded] = useState(true);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -58,7 +59,14 @@ const StaffDashboard = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (user !== 0 && speciality !== 0) {
+
+    if (!schedule.speciality) {
+      setErrorMessage("Please choose a speciality");
+      setSuccessMessage("");
+      return;
+    }
+
+    if (user !== 0 && schedule.date && schedule.time) {
       try {
         await axios.post(`${apiUrl}/api/auth/schedule`, schedule, {
           headers: {
@@ -68,10 +76,10 @@ const StaffDashboard = () => {
         });
         setSuccessMessage("Schedule confirmed");
         setErrorMessage("");
-        setModalMessage("A confirmation will be sent to your email address.");
-        setIsModalOpen(true);
+        setModalMessage("Schedule created successfully.");
+        openModalWithDelay();
       } catch (error) {
-        setErrorMessage("Error confirming booking. Please try again.");
+        setErrorMessage("The date and time is already scheduled. Please try another date and time.");
         console.log("Error from client ", error.message);
         setSuccessMessage("");
       }
@@ -79,6 +87,13 @@ const StaffDashboard = () => {
       setErrorMessage("Please fill in all required fields");
       setSuccessMessage("");
     }
+  };
+
+  const openModalWithDelay = () => {
+    // Set a delay of, for example, 2000 milliseconds (2 seconds)
+    setTimeout(() => {
+      setIsModalOpen(true);
+    }, 2000);
   };
 
   const closeModal = () => {
@@ -108,19 +123,25 @@ const StaffDashboard = () => {
     password: "",
   });
 
+  
+
   const toggleFormExpansion = (formType) => {
     if (formType === "userDetails") {
       setIsUserDetailsFormExpanded((prev) => !prev);
-      setIsPasswordFormExpanded(false);
-      setIsBookingFormExpanded(false);
+      // setIsPasswordFormExpanded(false);
+      // setIsBookingFormExpanded(false);
     } else if (formType === "password") {
       setIsPasswordFormExpanded((prev) => !prev);
-      setIsUserDetailsFormExpanded(false);
-      setIsBookingFormExpanded(false);
+      // setIsUserDetailsFormExpanded(false);
+      // setIsBookingFormExpanded(false);
     } else if (formType === "bookingDetails") {
       setIsBookingFormExpanded((prev) => !prev);
-      setIsUserDetailsFormExpanded(false);
-      setIsPasswordFormExpanded(false);
+      // setIsUserDetailsFormExpanded(false);
+      // setIsPasswordFormExpanded(false);
+    }else if (formType === "schedule") {
+      setIsCreateScheduleFormExpanded((prev) => !prev);
+      // setIsUserDetailsFormExpanded(false);
+      // setIsPasswordFormExpanded(false);
     }
   };
 
@@ -268,13 +289,14 @@ const StaffDashboard = () => {
     <>
       <div
         className="form-toggle mb-4 mt-10 w-96 mx-auto flex items-center justify-center lg:px-8"
+        onClick={() => toggleFormExpansion("schedule")}
         style={{
           cursor: "pointer",
           padding: "12px",
           border: "1px solid #ccc",
           borderRadius: "20px",
-          backgroundColor: "#A3B8CB",
-          color: "#000",
+          backgroundColor: isCreateScheduleFormExpanded ? "#A3B8CB" : "#506081",
+          color: isCreateScheduleFormExpanded ? "#000" : "white",
           textAlign: "center",
           display: "flex",
           flexDirection: "row",
@@ -283,8 +305,9 @@ const StaffDashboard = () => {
         <span style={{ fontSize: "17px" }}>Create schedule</span>
         <img className="w-7 ml-2" src={spec} alt="" />
       </div>
-      <div className="container -mt-14">
-        <div className="flex-container flex-co flex flex-1">
+      {isCreateScheduleFormExpanded && (
+      <div className="mb-7 max-w-lg mx-auto flex-1 flex flex-col items-center justify-center lg:px-8">
+        <div className="container bg-[#BFC3CC] rounded-xl shadow-md text-black w-full">
           <div
             style={{
               display: "flex",
@@ -294,26 +317,13 @@ const StaffDashboard = () => {
               alignItems: "center",
             }}
           >
-            <input
-              type="date"
-              className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
-              placeholder="Date"
-              name="date"
-              // value={value}
-              onChange={(e) => updateSchedule(e)}
-              required
-            />
-            <input
-              type="time"
-              className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
-              placeholder="Time"
-              name="time"
-              // value={selectedTime}
-              onChange={(e) => updateSchedule(e)}
-              required
-            />
+            
 
-            <form className="form">
+            <form className="form"
+            style={{ display: isCreateScheduleFormExpanded ? "block" : "none" }}
+            onSubmit={(e) => onSubmit(e, "schedule")}
+            >
+            
               <select
                 name="speciality"
                 className="block border-2 border-[#575757] mt-6 w-full p-1 rounded-lg mb-4 appearance-none focus:outline-none focus:border-blue"
@@ -332,8 +342,26 @@ const StaffDashboard = () => {
                 <option value="PSYCHOLOGIST">Psychologist</option>
                 <option value="BVC_NURSE">Bvc Nurse</option>
               </select>
+              <input v
+              type="date"
+              className="block border-2 border-[#575757] w-full p-1 rounded-lg mb-4"
+              placeholder="Date"
+              name="date"
+              // value={value}
+              onChange={(e) => updateSchedule(e)}
+              required
+            />
+            <input
+              type="time"
+              className="block border-2 border-[#575757] w-full p-30 p-1 rounded-lg mb-4"
+              placeholder="Time"
+              name="time"
+              // value={selectedTime}
+              onChange={(e) => updateSchedule(e)}
+              required
+            />
               <button
-                className="book-btn bg-[#82a9ab]"
+                className="book-btn w-full bg-[#82a9ab]"
                 onClick={(e) => handleSubmit(e)}
               >
                 Create Schedule
@@ -344,11 +372,11 @@ const StaffDashboard = () => {
                   {errorMessage}
                 </p>
               )}
-              {successMessage && (
+              {/* {successMessage && (
                 <p className="text-green-700 text-md mt-4 text-center">
                   {successMessage}
                 </p>
-              )}
+              )} */}
             </form>
 
             <Modal
@@ -360,6 +388,7 @@ const StaffDashboard = () => {
           </div>
         </div>
       </div>
+      )}
       {/* update user */}
       <div
         className="form-toggle mb-4 w-96 mx-auto flex items-center justify-center lg:px-8"
@@ -497,7 +526,7 @@ const StaffDashboard = () => {
           padding: "12px",
           border: "1px solid #ccc",
           borderRadius: "20px",
-          marginBottom: "10px",
+          marginBottom: "10%",
           backgroundColor: isBookingFormExpanded ? "#A3B8CB" : "#506081",
           color: isBookingFormExpanded ? "#000" : "white",
           textAlign: "center",
@@ -505,7 +534,7 @@ const StaffDashboard = () => {
           alignItems: "center",
         }}
       >
-        <span style={{ flex: "" }}>View Booking Details</span>
+        <span className= "" style={{ flex: "" }}>View Booking Details</span>
         <img className="w-8 ml-2" src={view} alt="" />
       </div>
       {isBookingFormExpanded && (
@@ -519,12 +548,14 @@ const StaffDashboard = () => {
                     className="mb-1 border-2 border-gray-400 bg-gray-300 rounded p-2 text-xs "
                     key={booking.id}
                   >
+                    {/* <strong>Patient:</strong> {booking.user.fullName}
+                    <br /> */}
                     <strong>Specialist:</strong> {booking.speciality}
                     <img className="inline-block w-7 mb-2" src={perac} alt="" />
                     <br />
                     <strong>Date:</strong> {booking.schedule.date}
                     <br />
-                    <strong>Time:</strong> {booking.schedule.time}
+                    <strong>Time:</strong> {booking.schedule.formattedTime}
                     <br />
                     <button
                       className="mt-2 p-1 bg-red-500 text-white rounded hover:bg-red-700"

@@ -86,7 +86,7 @@ export default function ReviewPage() {
   return (
     <div className="flex flex-col">
       <div className="mx-auto mt-5 mb-3">
-        <img src={feedback} className="w-60 mt-1" alt="Success Icon" />
+        <img src={feedback} className="w-60 mt-20" alt="Success Icon" />
       </div>
 
       {/* Select booking */}

@@ -17,7 +17,7 @@ function RegisterPage() {
     speciality: "",
     username: "",
     email: "",
-    roles: ["user"], // Set a default role, you can adjust as needed
+    roles: ["user"],
     password: "",
   });
 

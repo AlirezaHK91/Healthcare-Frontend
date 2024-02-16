@@ -20,11 +20,13 @@ function BookingPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser) {
-      setUser(storedUser.id);
+      setUser(storedUser.id)
+      setUserEmail(storedUser.email)
     }
     console.log(user);
   }, []);
@@ -141,8 +143,8 @@ function BookingPage() {
   </span>
   <img className="w-7 ml-2" src={spec} alt="" />
 </div>
-    <div className="container -mt-14">
-      <div className="flex-container flex-co flex flex-1">
+<div className="mb-7 max-w-lg mx-auto flex-1 flex flex-col items-center justify-center lg:px-8">
+        <div className="container bg-[#BFC3CC] rounded-xl shadow-md text-black w-full">
         <div
           style={{
             display: "flex",
@@ -183,19 +185,23 @@ function BookingPage() {
           />
           </div>
 
-            {schedules.length === 0 ? (
-              <p className="text-center text-lg mb-2">
-                No available times to book.
-              </p>
-            ) : (
-            <ul>
-              <p className="text-center text-lg mb-2">
-                Available times
-              </p>
-              {filterBySpeciality(speciality, schedules).map((schedule) => (
-                
+          {speciality === "" ? (
+          <p className="text-center text-lg mb-2">
+            Please choose speciality to see available times.
+          </p>
+        ) : schedules.length === 0 || !schedules.some(schedule => schedule.speciality === speciality && schedule.isAvailable) ? (
+          <p className="text-center text-lg mb-2">No available times to book.</p>
+        ) : (
+          <ul>
+            <p className="text-center text-lg mb-2">Available times</p>
+            {schedules
+              .filter(
+                (schedule) =>
+                  schedule.speciality === speciality && schedule.isAvailable
+              )
+              .map((schedule) => (
                 <li
-                className={`list mb-3 border-2 border-gray-400 bg-gray-300 rounded p-2 ${clickedSchedule === schedule.id ? 'selected-booking' : ''} ${hoveredSchedule === schedule.id ? 'hovered-booking' : ''}`}
+                  className={`list mb-3 border-2 border-gray-400 bg-gray-300 rounded p-2 ${clickedSchedule === schedule.id ? 'selected-booking' : ''} ${hoveredSchedule === schedule.id ? 'hovered-booking' : ''}`}
                   key={schedule.id}
                   onClick={() => {
                     setScheduleId(clickedSchedule === schedule.id ? 0 : schedule.id);
@@ -209,26 +215,27 @@ function BookingPage() {
                   <br />
                   <strong>Date:</strong> {schedule.date}
                   <br />
-                  <strong>Time:</strong> {schedule.time}
+                  <strong>Time:</strong> {schedule.formattedTime}
                   <br />
                 </li>
               ))}
             </ul>
             )}
-            <button className="book-btn bg-[#82a9ab]" onClick={(e) => handleSubmit(e)}>
+            <button className="book-btn w-full bg-[#82a9ab]" onClick={(e) => handleSubmit(e)}>
               Book
             </button>
             
             {errorMessage && <p className="text-red-500 mt-4 text-center text-lg">{errorMessage}</p>}
-        {successMessage && (
+        {/* {successMessage && (
           <p className="text-green-700 text-md mt-4 text-center">{successMessage}</p>
-        )}
+        )} */}
           </form>
           <Modal
         isOpen={isModalOpen}
         closeModal={closeModal}
         successMessage={modalMessage}
         successMessage1={successMessage}
+        userEmail={userEmail}
       />
           </div>
           </div>
